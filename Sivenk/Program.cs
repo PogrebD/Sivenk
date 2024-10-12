@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Sivenk;
 using Sivenk.Inputers;
+using Sivenk.Outputers;
 
 const string BasePath = "../../../txt/";
 
@@ -24,6 +25,8 @@ for (int i = 0; i < result.Points.GetLength(0); i++)
 Console.WriteLine("Material: ");
 
 LinesGridBuilder linesGridBuilder = new();
-linesGridBuilder.Build();
+
+Outputer outputer = new Outputer();
+outputer.Print(linesGridBuilder.Build());
 
 int x = 224;
