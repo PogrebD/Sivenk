@@ -9,8 +9,8 @@ namespace Sivenk
 {
     public class Grid
     {
-        Element[] elements;
-        Point[,] points;
+        public Element[] elements;
+        public Point[,] points;
 
         public Grid(Element[] elements, Point[,] points)
         {

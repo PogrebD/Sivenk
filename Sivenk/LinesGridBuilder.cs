@@ -1,23 +1,12 @@
 ﻿using Sivenk.Inputers;
 using Sivenk.DataTypes;
+using Sivenk.Utils;
 
 namespace Sivenk
 {
     public class LinesGridBuilder
     {
-        private Element[] elements;
-        private Point[,] points;
-        
         Inputer inputer = new();
-
-        public LinesGridBuilder()
-        {
-            const string BasePath = "../../../txt/";
-
-            InputData inputData = inputer.Input(BasePath + "input.txt", BasePath + "material.txt");
-            points = inputData.Points;
-            elements = BuildElements(inputData.Points, inputData.Area);
-        }
 
         private Element[] BuildElements(Point[,] points, Area[] areas)
         {
@@ -57,6 +46,10 @@ namespace Sivenk
 
         public Grid Build()
         {
+            InputData inputData = inputer.Input(Path.Combine(PathsProvider.InputPath, FilesProvider.GigaInput), Path.Combine(PathsProvider.InputPath, FilesProvider.InputMaterial));
+            Point[,] points = inputData.Points;
+            Element[] elements = BuildElements(inputData.Points, inputData.Area);
+            
             return new Grid(elements, points);
         }
     }
