@@ -2,6 +2,8 @@
 
 public static class FoldersProvider
 {
-    public static readonly string InputFolder = "txt";
-    public static readonly string OutputFolder = "output";
+    public static readonly string BasePath = "../../../";
+
+    public static readonly string InputFolder = Path.Combine(BasePath, "txt");
+    public static readonly string OutputFolder = Path.Combine(BasePath, "output");
 }

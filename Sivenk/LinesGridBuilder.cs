@@ -46,7 +46,7 @@ namespace Sivenk
 
         public Grid Build()
         {
-            InputData inputData = inputer.Input(Path.Combine(PathsProvider.InputPath, FilesProvider.GigaInput), Path.Combine(PathsProvider.InputPath, FilesProvider.InputMaterial));
+            InputData inputData = inputer.Input(PathsProvider.InputGigaPath, PathsProvider.InputMaterialPath);
             Point[,] points = inputData.Points;
             Element[] elements = BuildElements(inputData.Points, inputData.Area);
             
