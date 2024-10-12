@@ -11,5 +11,11 @@ namespace Sivenk
     {
         Element[] elements;
         Point[,] points;
+
+        public Grid(Element[] elements, Point[,] points)
+        {
+            this.elements = elements;
+            this.points = points;
+        }
     }
 }

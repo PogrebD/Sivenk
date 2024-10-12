@@ -5,16 +5,18 @@ namespace Sivenk
 {
     public class LinesGridBuilder
     {
+        private Element[] elements;
+        private Point[,] points;
+        
         Inputer inputer = new();
-        public Grid Build()
+
+        public LinesGridBuilder()
         {
-            Grid grid = new();
             const string BasePath = "../../../txt/";
 
             InputData inputData = inputer.Input(BasePath + "input.txt", BasePath + "material.txt");
-            Element[] elements = BuildElements(inputData.Points, inputData.Area);
-
-            return grid;
+            points = inputData.Points;
+            elements = BuildElements(inputData.Points, inputData.Area);
         }
 
         private Element[] BuildElements(Point[,] points, Area[] areas)
@@ -51,6 +53,11 @@ namespace Sivenk
 
 
             return result;
+        }
+
+        public Grid Build()
+        {
+            return new Grid(elements, points);
         }
     }
 }
