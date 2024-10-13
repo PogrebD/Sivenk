@@ -19,8 +19,10 @@ public class IntegrialSplitter : ISplitter
     }
     public Grid Split(Grid sourceGrid)
     {
-        IterationData iterationData = new IterationData();
+        Element[] elements = new Element[splitData.NewBounds.ElementsNum];
+        Point[] points = new Point[splitData.NewBounds.PointsNum];
         
+        IterationData iterationData = new IterationData();
         for (int i = 0; i < sourceGrid.bounds.ElementsNumY; ++i)
         {
             iterationData.CurrentSplitY = _splitsY[i];
@@ -32,6 +34,9 @@ public class IntegrialSplitter : ISplitter
                 Element[] splitedElements = SplitElement(splitData, iterationData);
                 Point[] splitedPoints = SplitPoints(sourceGrid, iterationData);
                 
+                InsertElements(elements, splitedElements, splitData, iterationData);
+                InsertPoints(points, splitedPoints, splitData, iterationData);
+                
                 iterationData.PrevElemsX += iterationData.CurrentSplitX.IntervalsNum;
             }
 
@@ -39,8 +44,30 @@ public class IntegrialSplitter : ISplitter
             iterationData.PrevElemsY += iterationData.CurrentSplitY.IntervalsNum;
         }
         
-        Grid result = sourceGrid;
+        Grid result = new Grid(splitData.NewBounds, elements, points);
         return result;
+    }
+
+    private void InsertElements(Element[] elements, Element[] splitedElements, SplitData splitData, IterationData iterationData)
+    {
+        for (int i = 0; i < iterationData.CurrentSplitY.IntervalsNum; ++i)
+        {
+            for (int j = 0; j < iterationData.CurrentSplitX.IntervalsNum; ++j)
+            {
+                elements[(iterationData.PrevElemsY + i) * splitData.NewBounds.ElementsNumX + iterationData.PrevElemsX + j] = splitedElements[j];
+            }
+        }
+    }
+    
+    private void InsertPoints(Point[] points, Point[] splitedPoints, SplitData splitData, IterationData iterationData)
+    {
+        for (int i = 0; i < iterationData.CurrentSplitY.PointsNum; ++i)
+        {
+            for (int j = 0; j < iterationData.CurrentSplitX.PointsNum; ++j)
+            {
+                points[(iterationData.PrevElemsY + i) * splitData.NewBounds.PointsNumX + iterationData.PrevElemsX + j] = splitedPoints[j];
+            }
+        }
     }
 
     private Element[] SplitElement(SplitData splitData, IterationData iterationData)
