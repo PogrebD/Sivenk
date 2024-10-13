@@ -1,6 +1,6 @@
 ﻿using Sivenk.DataTypes;
 
-namespace Sivenk
+namespace Sivenk.LinesFEM.Inputers
 {
     internal class PointInputer
     {

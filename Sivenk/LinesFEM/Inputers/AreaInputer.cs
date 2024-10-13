@@ -1,6 +1,6 @@
 ﻿using Sivenk.DataTypes;
 
-namespace Sivenk.Inputers
+namespace Sivenk.LinesFEM.Inputers
 {
     internal class AreaInputer
     {

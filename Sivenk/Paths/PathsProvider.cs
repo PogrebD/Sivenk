@@ -1,4 +1,4 @@
-﻿namespace Sivenk.Utils;
+﻿namespace Sivenk.Paths;
 
 public static class PathsProvider
 {

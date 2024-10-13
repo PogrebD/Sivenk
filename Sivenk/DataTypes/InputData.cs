@@ -1,6 +1,4 @@
-﻿using Sivenk.DataTypes;
-
-namespace Sivenk;
+﻿namespace Sivenk.DataTypes;
 
 public readonly struct InputData
 {

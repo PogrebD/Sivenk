@@ -1,4 +1,6 @@
-﻿namespace Sivenk.Inputers;
+﻿using Sivenk.DataTypes;
+
+namespace Sivenk.LinesFEM.Inputers;
 
 public class Inputer
 {
