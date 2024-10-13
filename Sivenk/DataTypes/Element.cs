@@ -6,6 +6,12 @@ public class Element
     {
         IdPoints = idPoints;
     }
+
+    public Element(int[] idPoints, int material)
+    {
+        IdPoints = idPoints;
+        this.material = material;
+    }
     public int[] IdPoints { get; set; }
     public int material { get; set; }
 }

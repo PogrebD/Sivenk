@@ -33,7 +33,7 @@ GridBuildingData data = gridBuildingDataParser.Parse(inputData);
 GridBuilder builder = new GridBuilder();
 Grid grid = builder
     .SetGridConstructor(new DefaultConstructor())
-    .SetGridSplitter(new IntegrialSplitter(2, 2))
+    .SetGridSplitter(new IntegrialSplitter(inputData.SplitX, inputData.SplitY))
     .Build(data);
 
 Outputer outputer = new Outputer();

@@ -1,3 +1,6 @@
 ﻿namespace Sivenk.DataTypes;
 
-public struct Split(int IntervalsNum, double DischargeCoefficient);
+public record struct Split(int IntervalsNum, double DischargeCoefficient)
+{
+    public int PointsNum => IntervalsNum + 1; 
+}
