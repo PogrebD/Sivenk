@@ -7,20 +7,18 @@ public class IntegrialSplitter : ISplitter
 {
     private Split[] _splitsX;
     private Split[] _splitsY;
-    private SplitData splitData;
     
     public IntegrialSplitter(Split[] splitsX, Split[] splitsY)
     {
         _splitsX = splitsX;
         _splitsY = splitsY;
-        
-        splitData = new SplitData();
-        splitData.NewBounds = new Bounds(SumInterval(splitsX), SumInterval(splitsY));
     }
     public Grid Split(Grid sourceGrid)
     {
-        Element[] elements = new Element[splitData.NewBounds.ElementsNum];
-        Point[] points = new Point[splitData.NewBounds.PointsNum];
+        Bounds bounds = new Bounds(SumInterval(_splitsX), SumInterval(_splitsY));
+
+        Element[] elements = new Element[bounds.ElementsNum];
+        Point[] points = new Point[bounds.PointsNum];
         
         IterationData iterationData = new IterationData();
         for (int i = 0; i < sourceGrid.bounds.ElementsNumY; ++i)
@@ -31,11 +29,11 @@ public class IntegrialSplitter : ISplitter
                 iterationData.CurrentSplitX = _splitsX[j];
                 iterationData.CurrentElement = sourceGrid.elements[i * sourceGrid.bounds.ElementsNumX + j];
                 
-                Element[] splitedElements = SplitElement(splitData, iterationData);
+                Element[] splitedElements = SplitElement(bounds, iterationData);
                 Point[] splitedPoints = SplitPoints(sourceGrid, iterationData);
                 
-                InsertElements(elements, splitedElements, splitData, iterationData);
-                InsertPoints(points, splitedPoints, splitData, iterationData);
+                InsertElements(elements, splitedElements, bounds, iterationData);
+                InsertPoints(points, splitedPoints, bounds, iterationData);
                 
                 iterationData.PrevElemsX += iterationData.CurrentSplitX.IntervalsNum;
             }
@@ -44,33 +42,33 @@ public class IntegrialSplitter : ISplitter
             iterationData.PrevElemsY += iterationData.CurrentSplitY.IntervalsNum;
         }
         
-        Grid result = new Grid(splitData.NewBounds, elements, points);
+        Grid result = new Grid(bounds, elements, points);
         return result;
     }
 
-    private void InsertElements(Element[] elements, Element[] splitedElements, SplitData splitData, IterationData iterationData)
+    private void InsertElements(Element[] elements, Element[] splitedElements, Bounds bounds, IterationData iterationData)
     {
         for (int i = 0; i < iterationData.CurrentSplitY.IntervalsNum; ++i)
         {
             for (int j = 0; j < iterationData.CurrentSplitX.IntervalsNum; ++j)
             {
-                elements[(iterationData.PrevElemsY + i) * splitData.NewBounds.ElementsNumX + iterationData.PrevElemsX + j] = splitedElements[j];
+                elements[(iterationData.PrevElemsY + i) * bounds.ElementsNumX + iterationData.PrevElemsX + j] = splitedElements[j];
             }
         }
     }
     
-    private void InsertPoints(Point[] points, Point[] splitedPoints, SplitData splitData, IterationData iterationData)
+    private void InsertPoints(Point[] points, Point[] splitedPoints, Bounds bounds, IterationData iterationData)
     {
         for (int i = 0; i < iterationData.CurrentSplitY.PointsNum; ++i)
         {
             for (int j = 0; j < iterationData.CurrentSplitX.PointsNum; ++j)
             {
-                points[(iterationData.PrevElemsY + i) * splitData.NewBounds.PointsNumX + iterationData.PrevElemsX + j] = splitedPoints[j];
+                points[(iterationData.PrevElemsY + i) * bounds.PointsNumX + iterationData.PrevElemsX + j] = splitedPoints[j];
             }
         }
     }
 
-    private Element[] SplitElement(SplitData splitData, IterationData iterationData)
+    private Element[] SplitElement(Bounds bounds, IterationData iterationData)
     {
         Element[] result = new Element[iterationData.CurrentSplitX.IntervalsNum * iterationData.CurrentSplitY.IntervalsNum];
 
@@ -81,10 +79,10 @@ public class IntegrialSplitter : ISplitter
                 int material = iterationData.CurrentElement.material;
                 int[] idPoints =
                 [
-                    (iterationData.PrevElemsY + i) * splitData.NewBounds.ElementsNumX + iterationData.PrevElemsX + j,
-                    (iterationData.PrevElemsY + i) * splitData.NewBounds.ElementsNumX + iterationData.PrevElemsX + j + 1,
-                    (iterationData.PrevElemsY + i + 1) * splitData.NewBounds.ElementsNumX + iterationData.PrevElemsX + j,
-                    (iterationData.PrevElemsY + i + 1) * splitData.NewBounds.ElementsNumX + iterationData.PrevElemsX + j + 1
+                    (iterationData.PrevElemsY + i) * bounds.ElementsNumX + iterationData.PrevElemsX + j,
+                    (iterationData.PrevElemsY + i) * bounds.ElementsNumX + iterationData.PrevElemsX + j + 1,
+                    (iterationData.PrevElemsY + i + 1) * bounds.ElementsNumX + iterationData.PrevElemsX + j,
+                    (iterationData.PrevElemsY + i + 1) * bounds.ElementsNumX + iterationData.PrevElemsX + j + 1
                 ];
                 
                 result[i * iterationData.CurrentSplitX.IntervalsNum + j] = new Element(idPoints, material);
