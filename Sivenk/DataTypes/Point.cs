@@ -11,6 +11,12 @@ public struct Point
         Y = y;
     }
 
+    public Point(Point other)
+    {
+        X = other.X;
+        Y = other.Y;
+    }
+
     public readonly override string ToString()
     {
         return new string($"{X} {Y}");

@@ -7,29 +7,28 @@ public class GridBuildingDataParser
     public GridBuildingData Parse(InputData inputData)
     {
         Point[,] points = inputData.Points;
-        Element[] elements = ParseElements(inputData.Points, inputData.Area);
+        Element[,] elements = ParseElements(inputData.Points, inputData.Area);
 
         return new GridBuildingData(points, elements);
     }
     
-    private Element[] ParseElements(Point[,] points, Area[] areas)
+    private Element[,] ParseElements(Point[,] points, Area[] areas)
     {
         int elemX = (points.GetLength(1) - 1);
         int elemY = (points.GetLength(0) - 1);
-        int elemNum = elemX * elemY;
-        Element[] result = new Element[elemNum];
+        Element[,] result = new Element[elemY, elemX];
 
         for (int i = 0; i < elemY; i++)
         {
             for (int j = 0; j < elemX; j++)
             {
-                int[] idPoint = new int[4];
-                idPoint[0] = i * (elemX+1) + j;
-                idPoint[1] = i * (elemX + 1) + j + 1;
-                idPoint[2] = (i + 1) * (elemX + 1) + j;
-                idPoint[3] = (i + 1) * (elemX + 1) + j + 1;
+                Tuple<int, int>[] idPoint = new Tuple<int, int>[4];
+                idPoint[0] = new Tuple<int, int>(i, j);
+                idPoint[1] = new Tuple<int, int>(i, j + 1);
+                idPoint[2] = new Tuple<int, int>(i + 1, j);
+                idPoint[3] = new Tuple<int, int>(i + 1, j + 1);
 
-                result[i * elemX + j] = new Element(idPoint);
+                result[i, j] = new Element(idPoint);
             }
         }
 
@@ -39,7 +38,7 @@ public class GridBuildingDataParser
             {
                 for (int j = areas[k].BoundsIndexes[0]; j < areas[k].BoundsIndexes[1]; j++)
                 {
-                    result[elemX * i + j].material = areas[k].MatId;
+                    result[i, j].material = areas[k].MatId;
                 }
             }
         }

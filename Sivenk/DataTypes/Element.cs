@@ -2,10 +2,17 @@
 
 public class Element
 {
-    public Element(int[] idPoints)
+    public Element() { }
+    public Element(Tuple<int, int>[] idPoints)
     {
         IdPoints = idPoints;
     }
-    public int[] IdPoints { get; set; }
+    
+    public Element(Tuple<int, int>[] idPoints, int material)
+    {
+        IdPoints = idPoints;
+        this.material = material;
+    }
+    public Tuple<int, int>[] IdPoints { get; set; }
     public int material { get; set; }
 }

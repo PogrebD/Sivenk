@@ -2,12 +2,12 @@
 
 public struct GridBuildingData
 {
-    public GridBuildingData(Point[,] newPoints, Element[] newElements)
+    public GridBuildingData(Point[,] newPoints, Element[,] newElements)
     {
         points = newPoints;
         elements = newElements;
     }
     
     public Point[,] points;
-    public  Element[] elements;
+    public  Element[,] elements;
 }
