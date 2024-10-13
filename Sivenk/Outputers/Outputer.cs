@@ -10,8 +10,8 @@ public class Outputer
 
     public void Print(Grid grid)
     {
-        using var pointsWriter = new StreamWriter(PathsProvider.OutputElementsPath);
-        using var elemWriter = new StreamWriter(PathsProvider.OutputPointsPath);
+        using var pointsWriter = new StreamWriter(PathsProvider.OutputPointsPath);
+        using var elemWriter = new StreamWriter(PathsProvider.OutputElementsPath);
         
         _pointsOutputer.Print(grid.points, pointsWriter);
         _elemsOutputer.Print(grid.elements, elemWriter);
