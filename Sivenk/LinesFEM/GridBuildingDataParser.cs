@@ -57,7 +57,7 @@ public class GridBuildingDataParser
             {
                 for (int j = areas[k].BoundsIndexes[0]; j < areas[k].BoundsIndexes[1]; j++)
                 {
-                    result[i * bounds.ElementsNumX + j].material = areas[k].MatId;
+                    result[i * bounds.ElementsNumX + j].Material = areas[k].MatId;
                 }
             }
         }

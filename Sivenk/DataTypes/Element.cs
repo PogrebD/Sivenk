@@ -2,6 +2,9 @@
 
 public class Element
 {
+    public int[] IdPoints { get; set; }
+    public int Material { get; set; }
+
     public Element(int[] idPoints)
     {
         IdPoints = idPoints;
@@ -10,8 +13,6 @@ public class Element
     public Element(int[] idPoints, int material)
     {
         IdPoints = idPoints;
-        this.material = material;
+        Material = material;
     }
-    public int[] IdPoints { get; set; }
-    public int material { get; set; }
 }

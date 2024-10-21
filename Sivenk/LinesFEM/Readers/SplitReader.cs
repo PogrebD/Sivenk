@@ -1,8 +1,8 @@
 ﻿using Sivenk.DataTypes;
 
-namespace Sivenk.LinesFEM.Inputers;
+namespace Sivenk.LinesFEM.Readers; 
 
-internal class SplitInputer
+public class SplitReader
 {
     public Split[] Input(StreamReader reader)
     {

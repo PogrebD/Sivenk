@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Sivenk.DataTypes;
 
-namespace Sivenk.Outputers;
+namespace Sivenk.Writers;
 
-public class ElemsOutputer
+public class ElemsWriter
 {
     public void Print(Element[] elements, StreamWriter writer)
     {
@@ -12,8 +12,8 @@ public class ElemsOutputer
         writer.WriteLine(elemsNum);
         for (int i = 0; i < elemsNum; ++i)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(elements[i].material + " ");
+            StringBuilder stringBuilder = new();
+            stringBuilder.Append(elements[i].Material + " ");
             stringBuilder.Append(elements[i].IdPoints[0] + " ");
             stringBuilder.Append(elements[i].IdPoints[1] + " ");
             stringBuilder.Append(elements[i].IdPoints[2] + " ");

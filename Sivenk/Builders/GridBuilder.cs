@@ -7,8 +7,8 @@ public class GridBuilder
 {
     private ISplitter _gridSplitter = new DefaultSplitter();
     private Bounds _bounds;
-    private Element[] _elements;
-    private Point[] _points;
+    private Element[] _elements = [];
+    private Point[] _points = [];
     
     public GridBuilder SetGridSplitter(ISplitter newSplitter)
     {
@@ -36,9 +36,7 @@ public class GridBuilder
     
     public Grid Build()
     {
-        Grid grid = new Grid(_bounds, _elements, _points);
-        Grid splittedGrid = _gridSplitter.Split(grid);
-
-        return splittedGrid;
+        Grid grid = new(_bounds, _elements, _points);
+        return _gridSplitter.Split(grid);
     }
 }

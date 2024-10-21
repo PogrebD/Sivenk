@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Sivenk.DataTypes;
 
-namespace Sivenk.Outputers;
+namespace Sivenk.Writers;
 
-public class PointsOutputer
+public class PointsWriter
 {
     public void Print(Point[] points, StreamWriter writer)
     {

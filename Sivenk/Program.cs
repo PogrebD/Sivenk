@@ -1,16 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Sivenk.Builders;
+﻿using Sivenk.Builders;
 using Sivenk.DataTypes;
 using Sivenk.LinesFEM;
-using Sivenk.LinesFEM.Inputers;
-using Sivenk.Outputers;
+using Sivenk.LinesFEM.Readers;
 using Sivenk.Paths;
 using Sivenk.Splitters;
+using Sivenk.Writers;
 
-Inputer inputer = new();
-InputData inputData = inputer.Input(PathsProvider.InputGigaPath, PathsProvider.InputMaterialPath);
+Reader reader = new();
+InputData inputData = reader.Input(PathsProvider.InputGigaPath, PathsProvider.InputMaterialPath);
 
-GridBuildingDataParser gridBuildingDataParser = new GridBuildingDataParser();
+GridBuildingDataParser gridBuildingDataParser = new();
 GridBuildingData gridBuildingData = gridBuildingDataParser.Parse(inputData);
 
 GridBuilder builder = new();
@@ -21,5 +20,5 @@ Grid grid =  builder
     .SetGridSplitter(new IntegrialSplitter(inputData.SplitX, inputData.SplitY))
     .Build();
 
-Outputer outputer = new();
+Writer outputer = new();
 outputer.Print(grid);

@@ -21,13 +21,13 @@ public class IntegrialSplitter : ISplitter
         Point[] points = new Point[bounds.PointsNum];
         
         IterationData iterationData = new IterationData();
-        for (int i = 0; i < sourceGrid.bounds.ElementsNumY; ++i)
+        for (int i = 0; i < sourceGrid.Bounds.ElementsNumY; ++i)
         {
             iterationData.CurrentSplitY = _splitsY[i];
-            for (int j = 0; j < sourceGrid.bounds.ElementsNumX; ++j)
+            for (int j = 0; j < sourceGrid.Bounds.ElementsNumX; ++j)
             {
                 iterationData.CurrentSplitX = _splitsX[j];
-                iterationData.CurrentElement = sourceGrid.elements[i * sourceGrid.bounds.ElementsNumX + j];
+                iterationData.CurrentElement = sourceGrid.Elements[i * sourceGrid.Bounds.ElementsNumX + j];
                 
                 Element[] splitedElements = SplitElement(bounds, iterationData);
                 Point[] splitedPoints = SplitPoints(sourceGrid, iterationData);
@@ -76,7 +76,7 @@ public class IntegrialSplitter : ISplitter
         {
             for (int j = 0; j < iterationData.CurrentSplitX.IntervalsNum; ++j)
             {
-                int material = iterationData.CurrentElement.material;
+                int material = iterationData.CurrentElement.Material;
                 int[] idPoints =
                 [
                     (iterationData.PrevElemsY + i) * bounds.ElementsNumX + iterationData.PrevElemsX + j,
@@ -96,9 +96,9 @@ public class IntegrialSplitter : ISplitter
     {
         Point[] result = new Point[(iterationData.CurrentSplitX.PointsNum) * (iterationData.CurrentSplitY.PointsNum)];
 
-        Point bottomLeftPoint = sourceGrid.points[iterationData.CurrentElement.IdPoints[0]];
-        Point bottomRightPoint = sourceGrid.points[iterationData.CurrentElement.IdPoints[1]];
-        Point topLeftPoint = sourceGrid.points[iterationData.CurrentElement.IdPoints[2]];
+        Point bottomLeftPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[0]];
+        Point bottomRightPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[1]];
+        Point topLeftPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[2]];
         
         double stepX = (bottomRightPoint.X - bottomLeftPoint.X) / iterationData.CurrentSplitX.IntervalsNum;
         double stepY = (topLeftPoint.Y - bottomLeftPoint.Y) / iterationData.CurrentSplitY.IntervalsNum;
