@@ -5,6 +5,9 @@ using Sivenk.LinesFEM.Readers;
 using Sivenk.Paths;
 using Sivenk.Splitters;
 using Sivenk.Writers;
+using System.Globalization;
+
+Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
 Reader reader = new();
 InputData inputData = reader.Input(PathsProvider.InputGigaPath, PathsProvider.InputMaterialPath);

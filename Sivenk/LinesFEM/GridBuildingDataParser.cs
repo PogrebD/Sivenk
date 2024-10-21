@@ -32,7 +32,6 @@ public class GridBuildingDataParser
         return new Bounds(inputDataLines[0].Points.Length - 1, inputDataLines.Length - 1);
     }
 
-
     private Element[] ParseElements(Area[] areas, Bounds bounds)
     {
         Element[] result = new Element[bounds.ElementsNum];

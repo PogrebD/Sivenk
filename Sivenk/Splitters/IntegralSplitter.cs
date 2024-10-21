@@ -3,19 +3,19 @@ using Sivenk.Splitters.DataTypes;
 
 namespace Sivenk.Splitters;
 
-public class IntegrialSplitter : ISplitter
+public class IntegralSplitter : ISplitter
 {
-    private Split[] _splitsX;
-    private Split[] _splitsY;
+    private readonly Split[] _splitsX;
+    private readonly Split[] _splitsY;
     
-    public IntegrialSplitter(Split[] splitsX, Split[] splitsY)
+    public IntegralSplitter(Split[] splitsX, Split[] splitsY)
     {
         _splitsX = splitsX;
         _splitsY = splitsY;
     }
     public Grid Split(Grid sourceGrid)
     {
-        Bounds bounds = new Bounds(SumInterval(_splitsX), SumInterval(_splitsY));
+        Bounds bounds = new(SumInterval(_splitsX), SumInterval(_splitsY));
 
         Element[] elements = new Element[bounds.ElementsNum];
         Point[] points = new Point[bounds.PointsNum];
@@ -42,7 +42,7 @@ public class IntegrialSplitter : ISplitter
             iterationData.PrevElemsY += iterationData.CurrentSplitY.IntervalsNum;
         }
         
-        Grid result = new Grid(bounds, elements, points);
+        Grid result = new(bounds, elements, points);
         return result;
     }
 

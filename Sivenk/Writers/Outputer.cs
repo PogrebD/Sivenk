@@ -5,8 +5,8 @@ namespace Sivenk.Writers;
 
 public class Writer
 {
-    private ElemsWriter _elemsWriter = new();
-    private PointsWriter _pointsWriter = new();
+    private readonly ElemsWriter _elemsWriter = new();
+    private readonly PointsWriter _pointsWriter = new();
 
     public void Print(Grid grid)
     {

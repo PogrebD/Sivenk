@@ -9,9 +9,9 @@ public class Reader
     private readonly LineReader _lineReader = new();
     private readonly SplitReader _splitReader = new();
     
-    public InputData Input(string fileNameGl, string filaeNameMat)
+    public InputData Input(string fileNameGl, string fileNameMat)
     {
-        using var materialReader = new StreamReader(filaeNameMat);
+        using var materialReader = new StreamReader(fileNameMat);
         using var gridReader = new StreamReader(fileNameGl);
 
         var lines = _lineReader.Input(gridReader);
