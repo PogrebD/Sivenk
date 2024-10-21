@@ -52,7 +52,7 @@ public class IntegrialSplitter : ISplitter
         {
             for (int j = 0; j < iterationData.CurrentSplitX.IntervalsNum; ++j)
             {
-                elements[(iterationData.PrevElemsY + i) * bounds.ElementsNumX + iterationData.PrevElemsX + j] = splitedElements[j];
+                elements[(iterationData.PrevElemsY + i) * bounds.ElementsNumX + iterationData.PrevElemsX + j] = splitedElements[iterationData.CurrentSplitX.IntervalsNum * i + j];
             }
         }
     }
@@ -63,7 +63,7 @@ public class IntegrialSplitter : ISplitter
         {
             for (int j = 0; j < iterationData.CurrentSplitX.PointsNum; ++j)
             {
-                points[(iterationData.PrevElemsY + i) * bounds.PointsNumX + iterationData.PrevElemsX + j] = splitedPoints[j];
+                points[(iterationData.PrevElemsY + i) * bounds.PointsNumX + iterationData.PrevElemsX + j] = splitedPoints[iterationData.CurrentSplitX.PointsNum * i + j];
             }
         }
     }
