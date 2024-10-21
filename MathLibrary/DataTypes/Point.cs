@@ -25,7 +25,7 @@ public class Point : IEnumerable<double>
         set => _values[index] = value;
     }
     
-    public override string ToString() => $"Point({string.Join(", ", _values)})";
+    public override string ToString() => $"{string.Join(" ", _values)}";
     
     public Point(Point copyFromPoint) =>_values = copyFromPoint._values.Select(x => x).ToArray();
 

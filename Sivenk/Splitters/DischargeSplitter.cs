@@ -1,4 +1,5 @@
-﻿using Sivenk.DataTypes;
+﻿using MathLibrary.DataTypes;
+using Sivenk.DataTypes;
 using Sivenk.Splitters.DataTypes;
 
 namespace Sivenk.Splitters;
@@ -17,8 +18,8 @@ public class DischargeSplitter : ElementSplitter
         Point bottomRightPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[1]];
         Point topLeftPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[2]];
         
-        double intervalX = bottomRightPoint.X - bottomLeftPoint.X;
-        double intervalY = topLeftPoint.Y - bottomLeftPoint.Y;
+        double intervalX = bottomRightPoint[0] - bottomLeftPoint[0];
+        double intervalY = topLeftPoint[1] - bottomLeftPoint[1];
         
         double dischargeCoeffX = iterationData.CurrentSplitX.DischargeCoefficient > 0 
             ? iterationData.CurrentSplitX.DischargeCoefficient 
@@ -37,7 +38,7 @@ public class DischargeSplitter : ElementSplitter
             for (int j = 0; j < iterationData.CurrentSplitX.PointsNum; ++j)
             {
                 double stepX = initialStepX * (1 - double.Pow(dischargeCoeffX, j)) / (1 - dischargeCoeffX);
-                result[i * iterationData.CurrentSplitX.PointsNum + j] = new Point(bottomLeftPoint.X + stepX, bottomLeftPoint.Y + stepY);
+                result[i * iterationData.CurrentSplitX.PointsNum + j] = new Point(bottomLeftPoint[0] + stepX, bottomLeftPoint[1] + stepY);
             }
         }
         

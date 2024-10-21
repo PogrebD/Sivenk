@@ -1,4 +1,5 @@
-﻿using Sivenk.DataTypes;
+﻿using MathLibrary.DataTypes;
+using Sivenk.DataTypes;
 using Sivenk.Splitters.DataTypes;
 
 namespace Sivenk.Splitters;

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using MathLibrary.DataTypes;
 using Sivenk.DataTypes;
 
 namespace Sivenk.Writers;

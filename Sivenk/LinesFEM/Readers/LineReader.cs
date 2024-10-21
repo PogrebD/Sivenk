@@ -1,4 +1,5 @@
-﻿using Sivenk.DataTypes;
+﻿using MathLibrary.DataTypes;
+using Sivenk.DataTypes;
 
 namespace Sivenk.LinesFEM.Readers;
 

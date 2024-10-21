@@ -1,4 +1,6 @@
-﻿namespace Sivenk.DataTypes;
+﻿using MathLibrary.DataTypes;
+
+namespace Sivenk.DataTypes;
 
 public struct GridBuildingData
 {

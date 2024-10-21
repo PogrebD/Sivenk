@@ -1,4 +1,5 @@
-﻿using Sivenk.DataTypes;
+﻿using MathLibrary.DataTypes;
+using Sivenk.DataTypes;
 using Sivenk.Splitters.DataTypes;
 
 namespace Sivenk.Splitters;
@@ -21,14 +22,14 @@ public class IntegralSplitter : ElementSplitter
         Point bottomRightPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[1]];
         Point topLeftPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[2]];
         
-        double stepX = (bottomRightPoint.X - bottomLeftPoint.X) / iterationData.CurrentSplitX.IntervalsNum;
-        double stepY = (topLeftPoint.Y - bottomLeftPoint.Y) / iterationData.CurrentSplitY.IntervalsNum;
+        double stepX = (bottomRightPoint[0] - bottomLeftPoint[0]) / iterationData.CurrentSplitX.IntervalsNum;
+        double stepY = (topLeftPoint[1] - bottomLeftPoint[1]) / iterationData.CurrentSplitY.IntervalsNum;
         
         for (int i = 0; i < iterationData.CurrentSplitY.PointsNum; ++i)
         {
             for (int j = 0; j < iterationData.CurrentSplitX.PointsNum; ++j)
             {
-                result[i * iterationData.CurrentSplitX.PointsNum + j] = new Point(bottomLeftPoint.X + stepX * j, bottomLeftPoint.Y + stepY * i);
+                result[i * iterationData.CurrentSplitX.PointsNum + j] = new Point(bottomLeftPoint[0] + stepX * j, bottomLeftPoint[1] + stepY * i);
             }
         }
         
