@@ -17,10 +17,11 @@ public class DischargeSplitter : ElementSplitter
         Point bottomLeftPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[0]];
         Point bottomRightPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[1]];
         Point topLeftPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[2]];
-        
-        double intervalX = bottomRightPoint[0] - bottomLeftPoint[0];
-        double intervalY = topLeftPoint[1] - bottomLeftPoint[1];
-        
+        Point topRightPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[3]];
+
+        Vector leftDirectionY = (topLeftPoint - bottomLeftPoint).Normalize();
+        Vector rightDirectionY = (topRightPoint - bottomRightPoint).Normalize();
+
         double dischargeCoeffX = iterationData.CurrentSplitX.DischargeCoefficient > 0 
             ? iterationData.CurrentSplitX.DischargeCoefficient 
             : 1 / -iterationData.CurrentSplitX.DischargeCoefficient;
@@ -28,17 +29,30 @@ public class DischargeSplitter : ElementSplitter
         double dischargeCoeffY = iterationData.CurrentSplitY.DischargeCoefficient > 0 
             ? iterationData.CurrentSplitY.DischargeCoefficient 
             : 1 / -iterationData.CurrentSplitY.DischargeCoefficient;
+
+        double leftLengthY = (topLeftPoint - bottomLeftPoint).Lenght();
+        double rightLengthY = (topRightPoint - bottomRightPoint).Lenght();
         
-        double initialStepX = intervalX * (1 - dischargeCoeffX) / (1 - double.Pow(dischargeCoeffX, iterationData.CurrentSplitX.IntervalsNum));
-        double initialStepY = intervalY * (1 - dischargeCoeffY) / (1 - double.Pow(dischargeCoeffY, iterationData.CurrentSplitY.IntervalsNum));
+        double coefY = (1 - dischargeCoeffY) / (1 - double.Pow(dischargeCoeffY, iterationData.CurrentSplitY.IntervalsNum));
+        double coefX = (1 - dischargeCoeffX) / (1 - double.Pow(dischargeCoeffX, iterationData.CurrentSplitX.IntervalsNum));
+        
+        double initialStepLeftY = leftLengthY * coefY;
+        double initialStepRightY = rightLengthY * coefY;
         
         for (int i = 0; i < iterationData.CurrentSplitY.PointsNum; ++i)
         {
-            double stepY = initialStepY * (1 - double.Pow(dischargeCoeffY, i)) / (1 - dischargeCoeffY);
+            double leftStepY = initialStepLeftY * (1 - double.Pow(dischargeCoeffY, i)) / (1 - dischargeCoeffY);
+            double rightStepY = initialStepRightY * (1 - double.Pow(dischargeCoeffY, i)) / (1 - dischargeCoeffY);
+            Point newBottomLeftPoint = bottomLeftPoint + leftStepY * leftDirectionY;
+            Point newBottomRightPoint = bottomRightPoint + rightStepY * rightDirectionY;
+            
             for (int j = 0; j < iterationData.CurrentSplitX.PointsNum; ++j)
             {
+                Vector directionX = (newBottomRightPoint - newBottomLeftPoint).Normalize();
+                double initialStepX = (newBottomRightPoint - newBottomLeftPoint).Lenght() * coefX;
                 double stepX = initialStepX * (1 - double.Pow(dischargeCoeffX, j)) / (1 - dischargeCoeffX);
-                result[i * iterationData.CurrentSplitX.PointsNum + j] = new Point(bottomLeftPoint[0] + stepX, bottomLeftPoint[1] + stepY);
+                
+                result[i * iterationData.CurrentSplitX.PointsNum + j] = newBottomLeftPoint + stepX * directionX;
             }
         }
         
