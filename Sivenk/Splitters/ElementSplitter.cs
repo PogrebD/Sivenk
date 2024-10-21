@@ -79,10 +79,10 @@ public class ElementSplitter : ISplitter
                 int material = iterationData.CurrentElement.Material;
                 int[] idPoints =
                 [
-                    (iterationData.PrevElemsY + i) * bounds.ElementsNumX + iterationData.PrevElemsX + j,
-                    (iterationData.PrevElemsY + i) * bounds.ElementsNumX + iterationData.PrevElemsX + j + 1,
-                    (iterationData.PrevElemsY + i + 1) * bounds.ElementsNumX + iterationData.PrevElemsX + j,
-                    (iterationData.PrevElemsY + i + 1) * bounds.ElementsNumX + iterationData.PrevElemsX + j + 1
+                    (iterationData.PrevElemsY + i) * bounds.PointsNumX + iterationData.PrevElemsX + j,
+                    (iterationData.PrevElemsY + i) * bounds.PointsNumX + iterationData.PrevElemsX + j + 1,
+                    (iterationData.PrevElemsY + i + 1) * bounds.PointsNumX + iterationData.PrevElemsX + j,
+                    (iterationData.PrevElemsY + i + 1) * bounds.PointsNumX + iterationData.PrevElemsX + j + 1
                 ];
                 
                 result[i * iterationData.CurrentSplitX.IntervalsNum + j] = new Element(idPoints, material);
