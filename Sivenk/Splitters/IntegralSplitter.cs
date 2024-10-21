@@ -21,15 +21,25 @@ public class IntegralSplitter : ElementSplitter
         Point bottomLeftPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[0]];
         Point bottomRightPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[1]];
         Point topLeftPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[2]];
+        Point topRightPoint = sourceGrid.Points[iterationData.CurrentElement.IdPoints[3]];
         
-        double stepX = (bottomRightPoint[0] - bottomLeftPoint[0]) / iterationData.CurrentSplitX.IntervalsNum;
-        double stepY = (topLeftPoint[1] - bottomLeftPoint[1]) / iterationData.CurrentSplitY.IntervalsNum;
+        Vector leftDirectionY = (topLeftPoint - bottomLeftPoint).Normalize();
+        Vector rightDirectionY = (topRightPoint - bottomRightPoint).Normalize();
+        
+        double leftStepY = (topLeftPoint - bottomLeftPoint).Lenght() / iterationData.CurrentSplitY.IntervalsNum;
+        double rightStepY = (topRightPoint - bottomRightPoint).Lenght() / iterationData.CurrentSplitY.IntervalsNum;
         
         for (int i = 0; i < iterationData.CurrentSplitY.PointsNum; ++i)
         {
+            Point newBottomLeftPoint = bottomLeftPoint + leftStepY * i * leftDirectionY;
+            Point newBottomRightPoint = bottomRightPoint + rightStepY * i * rightDirectionY;
+            
             for (int j = 0; j < iterationData.CurrentSplitX.PointsNum; ++j)
             {
-                result[i * iterationData.CurrentSplitX.PointsNum + j] = new Point(bottomLeftPoint[0] + stepX * j, bottomLeftPoint[1] + stepY * i);
+                Vector directionX = (newBottomRightPoint - newBottomLeftPoint).Normalize();
+                double stepX = (newBottomRightPoint - newBottomLeftPoint).Lenght() / iterationData.CurrentSplitX.IntervalsNum;
+                
+                result[i * iterationData.CurrentSplitX.PointsNum + j] = newBottomLeftPoint + stepX * j * directionX;
             }
         }
         
