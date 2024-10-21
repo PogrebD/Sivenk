@@ -18,7 +18,7 @@ Grid grid =  builder
     .SetBounds(gridBuildingData.bounds)
     .SetElements(gridBuildingData.elements)
     .SetPoints(gridBuildingData.points)
-    .SetGridSplitter(new IntegrialSplitter(inputData.SplitX, inputData.SplitY))
+    .SetGridSplitter(new DischargeSplitter(inputData.SplitX, inputData.SplitY))
     .Build();
 
 Outputer outputer = new();
