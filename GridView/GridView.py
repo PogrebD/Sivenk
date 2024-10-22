@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 
+
 def read_file(file_path):
     with open(file_path, 'r') as file:
         lines = file.readlines()
@@ -12,6 +13,7 @@ def read_file(file_path):
         data.append(numbers)
     return first_line, data
 
+
 def read_points(data):
     points = {}
 
@@ -22,9 +24,10 @@ def read_points(data):
         points[global_id] = (x, y)
     return points
 
+
 def read_connections(connection_data):
     connections = []
-    
+
     for line in connection_data:
         point1 = int(line[1])
         point2 = int(line[2])
@@ -33,18 +36,22 @@ def read_connections(connection_data):
         connections.append((point1, point2, point3, point4))
     return connections
 
+
 def plot_points_and_connections(points, connections):
     plt.figure(figsize=(8, 6))
 
-    #for point_id, (x, y) in points.items():
-        #plt.scatter(x, y, label=f'Point {point_id}')
-        # plt.text(x, y, f'{point_id}', fontsize=12, ha='right')
+    x_coords = [x for x, y in points.values()]
+    y_coords = [y for x, y in points.values()]
+    plt.scatter(x_coords, y_coords, color='green')
+
+    for point_id, (x, y) in points.items():
+        plt.text(x, y, f'{point_id}', fontsize=10, ha='right')
 
     for point1, point2, point3, point4 in connections:
         x_values = [points[point1][0], points[point2][0]]
         y_values = [points[point1][1], points[point2][1]]
         plt.plot(x_values, y_values, 'b-')
-        
+
         x_values = [points[point1][0], points[point3][0]]
         y_values = [points[point1][1], points[point3][1]]
         plt.plot(x_values, y_values, 'b-')
@@ -52,17 +59,18 @@ def plot_points_and_connections(points, connections):
         x_values = [points[point3][0], points[point4][0]]
         y_values = [points[point3][1], points[point4][1]]
         plt.plot(x_values, y_values, 'b-')
-        
+
         x_values = [points[point2][0], points[point4][0]]
         y_values = [points[point2][1], points[point4][1]]
         plt.plot(x_values, y_values, 'b-')
-        
+
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.title('Points and Connections')
     plt.grid(True)
     plt.legend()
     plt.show()
+
 
 points_path = '../Sivenk/output/points.txt'
 elements_path = '../Sivenk/output/elements.txt'
