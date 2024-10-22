@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+import sys
 
 def read_file(file_path):
     with open(file_path, 'r') as file:
@@ -72,8 +72,8 @@ def plot_points_and_connections(points, connections):
     plt.show()
 
 
-points_path = '../Sivenk/output/points.txt'
-elements_path = '../Sivenk/output/elements.txt'
+points_path = sys.argv[1] if len(sys.argv) > 1 else '../Sivenk/output/points.txt'
+elements_path = sys.argv[2] if len(sys.argv) > 1 else '../Sivenk/output/elements.txt'
 
 first_value, point_data = read_file(points_path)
 first_value, connection_data = read_file(elements_path)
