@@ -3,11 +3,9 @@ using Sivenk.DataTypes;
 using Sivenk.LinesFEM;
 using Sivenk.LinesFEM.Readers;
 using Sivenk.Paths;
-using Sivenk.Splitters;
 using Sivenk.Writers;
 using System.Globalization;
 using Sivenk.Splitters.GridSplitters;
-using Sivenk.Splitters.PointSplitters;
 
 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
