@@ -23,7 +23,7 @@ public class Application
             : new WithoutSplitting();
 
         GridBuilder builder = new();
-        Grid grid =  builder
+        Grid grid = builder
             .SetBounds(gridBuildingData.bounds)
             .SetElements(gridBuildingData.elements)
             .SetPoints(gridBuildingData.points)
