@@ -1,6 +1,6 @@
 ﻿using MathLibrary.DataTypes;
 using Sivenk.DataTypes;
-using Sivenk.Splitters;
+using Sivenk.Enumerators;
 using Sivenk.Splitters.GridSplitters;
 
 namespace Sivenk.Builders;
@@ -8,6 +8,7 @@ namespace Sivenk.Builders;
 public class GridBuilder
 {
     private IGridSplitter _gridSplitter = new WithoutSplitting();
+    private readonly EdgeEnumerator _edgeEnumerator = new EdgeEnumerator();
     private Bounds _bounds;
     private Element[] _elements = [];
     private Point[] _points = [];
@@ -39,6 +40,11 @@ public class GridBuilder
     public Grid Build()
     {
         Grid grid = new(_bounds, _elements, _points);
-        return _gridSplitter.Split(grid);
+        Grid splittedGrid = _gridSplitter.Split(grid);
+        
+        _edgeEnumerator.EnumerateEdges(splittedGrid);
+        return splittedGrid;
     }
+
+    
 }

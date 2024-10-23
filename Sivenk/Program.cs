@@ -6,7 +6,7 @@ Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
 Configuration configuration = new Configuration()
 {
-    shouldSplitGrid = true,
+    shouldSplitGrid = false,
     inputPaths = [PathsProvider.InputGigaPath, PathsProvider.InputMaterialPath],
     outputPaths = [PathsProvider.OutputPointsPath, PathsProvider.OutputElementsPath],
 };

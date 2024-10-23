@@ -3,6 +3,7 @@
 public class Element
 {
     public int[] IdPoints { get; set; }
+    public int[] Edges { get; set; }
     public int Material { get; set; }
 
     public Element(int[] idPoints)
