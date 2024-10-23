@@ -12,7 +12,7 @@ public class Application
 {
     public Grid Run(Configuration config)
     {
-        Reader reader = new(config.inputPaths);
+        IInputDataReader reader = new Reader(config.inputPaths);
         InputData inputData = reader.Input();
 
         GridBuildingDataParser gridBuildingDataParser = new();

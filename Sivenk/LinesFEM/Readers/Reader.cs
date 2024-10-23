@@ -2,7 +2,7 @@
 
 namespace Sivenk.LinesFEM.Readers;
 
-public class Reader
+public class Reader : IInputDataReader
 {
     private readonly AreaReader _areaReader = new();
     private readonly MaterialReader _matReader = new();
