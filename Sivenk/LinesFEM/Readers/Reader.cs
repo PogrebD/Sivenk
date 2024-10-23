@@ -9,10 +9,17 @@ public class Reader
     private readonly LineReader _lineReader = new();
     private readonly SplitReader _splitReader = new();
     
-    public InputData Input(string fileNameGl, string fileNameMat)
+    private readonly string[] _paths;
+
+    public Reader(string[] paths)
     {
-        using var materialReader = new StreamReader(fileNameMat);
-        using var gridReader = new StreamReader(fileNameGl);
+        _paths = paths;
+    }
+    
+    public InputData Input()
+    {
+        using var gridReader = new StreamReader(_paths[0]);
+        using var materialReader = new StreamReader(_paths[1]);
 
         var lines = _lineReader.Input(gridReader);
         var area = _areaReader.Input(gridReader);
