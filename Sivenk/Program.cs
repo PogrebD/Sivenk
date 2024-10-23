@@ -6,6 +6,8 @@ using Sivenk.Paths;
 using Sivenk.Splitters;
 using Sivenk.Writers;
 using System.Globalization;
+using Sivenk.Splitters.GridSplitters;
+using Sivenk.Splitters.PointSplitters;
 
 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
@@ -20,7 +22,7 @@ Grid grid =  builder
     .SetBounds(gridBuildingData.bounds)
     .SetElements(gridBuildingData.elements)
     .SetPoints(gridBuildingData.points)
-    .SetGridSplitter(new DischargeSplitter(inputData.SplitX, inputData.SplitY))
+    .SetGridSplitter(new DefaultGridSplitter(inputData.SplitX, inputData.SplitY))
     .Build();
 
 Writer outputer = new();

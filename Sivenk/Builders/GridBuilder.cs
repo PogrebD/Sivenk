@@ -1,17 +1,18 @@
 ﻿using MathLibrary.DataTypes;
 using Sivenk.DataTypes;
 using Sivenk.Splitters;
+using Sivenk.Splitters.GridSplitters;
 
 namespace Sivenk.Builders;
 
 public class GridBuilder
 {
-    private ISplitter _gridSplitter = new DefaultSplitter();
+    private IGridSplitter _gridSplitter = new WithoutSplitting();
     private Bounds _bounds;
     private Element[] _elements = [];
     private Point[] _points = [];
     
-    public GridBuilder SetGridSplitter(ISplitter newSplitter)
+    public GridBuilder SetGridSplitter(IGridSplitter newSplitter)
     {
         _gridSplitter = newSplitter;
         return this;

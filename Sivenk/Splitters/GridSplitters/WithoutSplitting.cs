@@ -1,8 +1,8 @@
 ﻿using Sivenk.DataTypes;
 
-namespace Sivenk.Splitters;
+namespace Sivenk.Splitters.GridSplitters;
 
-public class DefaultSplitter : ISplitter
+public class WithoutSplitting : IGridSplitter
 {
     public Grid Split(Grid sourceGrid)
     {
