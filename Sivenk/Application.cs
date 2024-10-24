@@ -1,4 +1,5 @@
-﻿using Sivenk.Builders;
+﻿using System.Diagnostics;
+using Sivenk.Builders;
 using Sivenk.DataTypes;
 using Sivenk.LinesFEM;
 using Sivenk.LinesFEM.Readers;
@@ -33,6 +34,33 @@ public class Application
         IGridWriter outputer = new Writer(config.outputPaths);
         outputer.Print(grid);
 
+        if (config.shouldSplitGrid)
+        {
+            ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");
+        }
+
         return grid;
+    }
+    
+    void ShowGrid(String filePath, string? pointsPath = null, string? elementsPath = null)
+    {
+        ProcessStartInfo prog = new()
+        {
+            FileName = "python",
+            Arguments = $"{filePath} {pointsPath} {elementsPath}",
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        };
+        using var process = Process.Start(prog);
+        using var reader = process?.StandardOutput;
+        string result = process.StandardOutput.ReadToEnd();
+        string error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        Console.WriteLine(result);
+        if (!string.IsNullOrEmpty(error))
+        {
+            Console.WriteLine($"Error: {error}");
+        }
     }
 }

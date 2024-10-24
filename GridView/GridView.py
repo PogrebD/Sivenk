@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import sys
+import random
 
 from matplotlib.patches import Polygon
 
@@ -16,7 +17,6 @@ def read_file(file_path):
         data.append(numbers)
     return first_line, data
 
-
 def read_points(data):
     points = {}
 
@@ -26,7 +26,6 @@ def read_points(data):
         y = float(line[2])
         points[global_id] = (x, y)
     return points
-
 
 def read_connections(connection_data):
     connections = []
@@ -45,9 +44,40 @@ def draw_polygon(ax, coords, color):
     poly.set_facecolor(color)
     ax.add_patch(poly)
 
+def generate_random_color():
+    return random.random(), random.random(), random.random()
 
+
+def create_color_map(connections):
+    color_pool = [
+        (1.0, 0.5, 0.0),
+        (0.5, 0.0, 0.5),
+        (0.0, 1.0, 1.0),
+        (1.0, 0.0, 1.0),
+        (0.5, 0.5, 0.5),
+        (0.0, 0.5, 1.0),
+        (0.0, 0.5, 0.0),
+        (0.5, 0.0, 0.0),
+        (0.5, 0.5, 0.0),
+        (0.5, 1.0, 0.5),
+        (1.0, 0.75, 0.8),
+    ]
+
+    color_map = {}
+    color_index = 0
+    total_colors = len(color_pool)
+
+    for connection in connections:
+        materialId = connection[0]
+        if materialId not in color_map:
+            color_map[materialId] = color_pool[color_index]
+            color_index = (color_index + 1) % total_colors
+
+    return color_map
 
 def plot_points_and_connections(points, connections):
+    color_map = create_color_map(connections)
+
     plt.figure(figsize=(8, 6))
 
     x_coords = [x for x, y in points.values()]
@@ -83,7 +113,7 @@ def plot_points_and_connections(points, connections):
                   (points[point2][0], points[point2][1])
                   ]
 
-        draw_polygon(ax, coords, color=(1/materialId, 1/materialId, 0))
+        draw_polygon(ax, coords, color_map[materialId])
 
     for point_id, (x, y) in points.items():
         plt.text(x, y, f'{point_id}', fontsize=10, ha='right')
@@ -95,7 +125,6 @@ def plot_points_and_connections(points, connections):
     plt.grid(True)
     plt.legend()
     plt.show()
-
 
 points_path = sys.argv[1] if len(sys.argv) > 1 else '../Sivenk/output/points.txt'
 elements_path = sys.argv[2] if len(sys.argv) > 1 else '../Sivenk/output/elements.txt'
