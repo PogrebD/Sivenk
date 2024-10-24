@@ -8,15 +8,15 @@ Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
 Configuration configuration = new Configuration()
 {
-    shouldSplitGrid = true,
+    shouldSplitGrid = false,
     inputPaths = [PathsProvider.InputGigaPath, PathsProvider.InputMaterialPath],
     outputPaths = [PathsProvider.OutputPointsPath, PathsProvider.OutputElementsPath],
 };
 
 Application app = new Application();
 Grid grid = app.Run(configuration);
-grid.GetEdgeId(13, 14);
-grid.GetEdgeId(21, 22);
+grid.GetElementIds(37);
+grid.GetElementIds(5);
 
 #if false
 ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");
