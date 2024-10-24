@@ -15,8 +15,8 @@ Configuration configuration = new Configuration()
 
 Application app = new Application();
 Grid grid = app.Run(configuration);
-grid.GetEdgeId(13, 14);
-grid.GetEdgeId(21, 22);
+//grid.GetEdgeId(13, 14);
+//grid.GetEdgeId(21, 22);
 
 #if false
 ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");
@@ -43,3 +43,6 @@ static void ShowGrid(String filePath, string? pointsPath = null, string? element
         Console.WriteLine($"Error: {error}");
     }
 }
+
+//points_path = sys.argv[1] if len(sys.argv) > 1 else '../Sivenk/output/points.txt'
+//elements_path = sys.argv[2] if len(sys.argv) > 1 else '../Sivenk/output/elements.txt'

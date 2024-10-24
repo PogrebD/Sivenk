@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import sys
 
+from matplotlib.patches import Polygon
+
+
 def read_file(file_path):
     with open(file_path, 'r') as file:
         lines = file.readlines()
@@ -29,12 +32,19 @@ def read_connections(connection_data):
     connections = []
 
     for line in connection_data:
+        materialId = int(line[0])
         point1 = int(line[1])
         point2 = int(line[2])
         point3 = int(line[3])
         point4 = int(line[4])
-        connections.append((point1, point2, point3, point4))
+        connections.append((materialId, point1, point2, point3, point4))
     return connections
+
+def draw_polygon(ax, coords, color):
+    poly = Polygon(coords, closed=True)
+    poly.set_facecolor(color)
+    ax.add_patch(poly)
+
 
 
 def plot_points_and_connections(points, connections):
@@ -44,10 +54,13 @@ def plot_points_and_connections(points, connections):
     y_coords = [y for x, y in points.values()]
     plt.scatter(x_coords, y_coords, color='green')
 
-    for point_id, (x, y) in points.items():
-        plt.text(x, y, f'{point_id}', fontsize=10, ha='right')
 
-    for point1, point2, point3, point4 in connections:
+    # Создание графика
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.set_aspect('equal', 'datalim')
+
+    for materialId, point1, point2, point3, point4 in connections:
         x_values = [points[point1][0], points[point2][0]]
         y_values = [points[point1][1], points[point2][1]]
         plt.plot(x_values, y_values, 'b-')
@@ -63,6 +76,18 @@ def plot_points_and_connections(points, connections):
         x_values = [points[point2][0], points[point4][0]]
         y_values = [points[point2][1], points[point4][1]]
         plt.plot(x_values, y_values, 'b-')
+
+        coords = [(points[point1][0], points[point1][1]),
+                  (points[point3][0], points[point3][1]),
+                  (points[point4][0], points[point4][1]),
+                  (points[point2][0], points[point2][1])
+                  ]
+
+        draw_polygon(ax, coords, color=(1/materialId, 1/materialId, 0))
+
+    for point_id, (x, y) in points.items():
+        plt.text(x, y, f'{point_id}', fontsize=10, ha='right')
+
 
     plt.xlabel('X')
     plt.ylabel('Y')
