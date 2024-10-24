@@ -16,6 +16,12 @@ public class Writer : IGridWriter
 
     public void Print(Grid grid)
     {
+        var directoryPath = Path.GetDirectoryName(_paths[0]);
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
+        
         using var pointsWriter = new StreamWriter(_paths[0]);
         using var elemWriter = new StreamWriter(_paths[1]);
         

@@ -10,8 +10,8 @@ Configuration configuration = new Configuration()
 {
     openPythonProject = false,
     shouldSplitGrid = true,
-    inputPaths = [PathsProvider.InputGigaPath, PathsProvider.InputMaterialPath],
-    outputPaths = [PathsProvider.OutputPointsPath, PathsProvider.OutputElementsPath],
+    inputFolderName = "txt",
+    outputFolderName = "output",
 };
 
 Application app = new Application();

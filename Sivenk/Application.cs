@@ -13,7 +13,12 @@ public class Application
 {
     public Grid Run(Configuration config)
     {
-        IInputDataReader reader = new Reader(config.inputPaths);
+        string[] inputPaths = [
+            Path.Combine(PathsProvider.InputFolder, config.inputFolderName, "input.txt"),
+            Path.Combine(PathsProvider.InputFolder, config.inputFolderName, "material.txt")
+        ];
+        
+        IInputDataReader reader = new Reader(inputPaths);
         InputData inputData = reader.Input();
 
         GridBuildingDataParser gridBuildingDataParser = new();
@@ -31,10 +36,15 @@ public class Application
             .SetGridSplitter(gridSplitter)
             .Build();
 
-        IGridWriter outputer = new Writer(config.outputPaths);
+        string[] outputPaths = [
+            Path.Combine(PathsProvider.OutputFolder, config.outputFolderName, "points.txt"),
+            Path.Combine(PathsProvider.OutputFolder, config.outputFolderName, "elements.txt")
+        ];
+        
+        IGridWriter outputer = new Writer(outputPaths);
         outputer.Print(grid);
 
-        if (config.shouldSplitGrid)
+        if (config.openPythonProject)
         {
             ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");
         }
