@@ -20,23 +20,68 @@ public class Grid
         return Elements[elementId].Edges;
     }
 
+    public IList<int> GetElementIds(int edgeId)
+    {
+        int[] pointIds = GetPointsId(edgeId);
+        int pointsIdDifference = pointIds[1] - pointIds[0];
+        int layerId = pointIds[0] / Bounds.PointsNumX;
+
+        var result = new List<int>();
+        int[] elementIds;
+
+        if (pointsIdDifference == Bounds.PointsNumX)
+        {
+            elementIds = [pointIds[0] - (layerId + 1), pointIds[0] - layerId];
+        }
+        else if (pointsIdDifference == 1 && pointIds[1] % Bounds.PointsNumX != 0)
+        {
+            elementIds = [pointIds[0] - layerId, pointIds[0] - Bounds.ElementsNumX - layerId];
+        }
+        else
+        {
+            throw new ArgumentException("Invalid edgeId specified.");
+        }
+
+        foreach (int elementId in elementIds)
+        {
+            if (IsElementIdValid(elementId))
+            {
+                result.Add(elementId);
+            }
+        }
+
+        return result;
+    }
+
+    private bool IsElementIdValid(int elementId)
+    {
+        return elementId >= 0 && elementId < Bounds.ElementsNum;
+    }
+
     public int GetEdgeId(int firstPointId, int secondPointId)
     {
         if (secondPointId < firstPointId)
         {
             (firstPointId, secondPointId) = (secondPointId, firstPointId);
         }
-        
-        if (secondPointId - firstPointId == Bounds.PointsNumX)
+
+        int lineLevel = -1;
+        int pointsIdDifference = secondPointId - firstPointId;
+        if (pointsIdDifference == Bounds.PointsNumX)
         {
-            Console.WriteLine($"Edges: {firstPointId + (firstPointId / Bounds.PointsNumX + 1) * Bounds.ElementsNumX}");
-            return firstPointId + (firstPointId / Bounds.PointsNumX + 1) * Bounds.ElementsNumX;
+            lineLevel = 1;
         }
         
-        if (secondPointId - firstPointId == 1 && secondPointId % Bounds.PointsNumX != 0)
+        if (pointsIdDifference == 1 && secondPointId % Bounds.PointsNumX != 0)
         {
-            Console.WriteLine($"Edges: {firstPointId + (firstPointId / Bounds.PointsNumX) * Bounds.ElementsNumX}");
-            return firstPointId + (firstPointId / Bounds.PointsNumX) * Bounds.ElementsNumX;
+            lineLevel = 0;
+        }
+
+        if (lineLevel != -1)
+        {
+            int edgeId = firstPointId + (firstPointId / Bounds.PointsNumX + lineLevel) * Bounds.ElementsNumX;
+            Console.WriteLine($"EdgeId: {edgeId}");
+            return edgeId;
         }
         
         throw new ArgumentException();
@@ -44,6 +89,11 @@ public class Grid
     
     public int[] GetPointsId(int edgeId)
     {
+        if (edgeId < 0 || edgeId >= Bounds.EdgesNum)
+        {
+            throw new ArgumentException();
+        }
+        
         int sum = Bounds.ElementsNumX + Bounds.PointsNumX;
 
         int[] points = new int[2];
