@@ -15,9 +15,8 @@ Configuration configuration = new Configuration()
 
 Application app = new Application();
 Grid grid = app.Run(configuration);
-/*grid.GetPointsId(0);
-grid.GetPointsId(25);
-grid.GetPointsId(18);*/
+grid.GetEdgeId(13, 14);
+grid.GetEdgeId(21, 22);
 
 #if false
 ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");

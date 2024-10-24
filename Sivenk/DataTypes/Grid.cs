@@ -22,7 +22,24 @@ public class Grid
 
     public int GetEdgeId(int firstPointId, int secondPointId)
     {
-        return 1;
+        if (secondPointId < firstPointId)
+        {
+            (firstPointId, secondPointId) = (secondPointId, firstPointId);
+        }
+        
+        if (secondPointId - firstPointId == Bounds.PointsNumX)
+        {
+            Console.WriteLine($"Edges: {firstPointId + (firstPointId / Bounds.PointsNumX + 1) * Bounds.ElementsNumX}");
+            return firstPointId + (firstPointId / Bounds.PointsNumX + 1) * Bounds.ElementsNumX;
+        }
+        
+        if (secondPointId - firstPointId == 1 && secondPointId % Bounds.PointsNumX != 0)
+        {
+            Console.WriteLine($"Edges: {firstPointId + (firstPointId / Bounds.PointsNumX) * Bounds.ElementsNumX}");
+            return firstPointId + (firstPointId / Bounds.PointsNumX) * Bounds.ElementsNumX;
+        }
+        
+        throw new ArgumentException();
     }
     
     public int[] GetPointsId(int edgeId)
