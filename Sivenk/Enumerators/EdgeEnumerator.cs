@@ -12,15 +12,15 @@ public class EdgeEnumerator
             {
                 Element currentElement = grid.Elements[i * grid.Bounds.ElementsNumX + j];
 
-                int pointsSum = grid.Bounds.PointsNumX + grid.Bounds.ElementsNumX;
-                int secondElement = grid.Bounds.ElementsNumX + i * pointsSum + j;
+                int edgesSumInRow = grid.Bounds.EdgesHorizontalNumX + grid.Bounds.EdgesVerticalNumX;
+                int leftEdge = grid.Bounds.EdgesHorizontalNumX + i * edgesSumInRow + j;
                 
                 int[] egdes = new[]
                 {
-                    i * pointsSum + j,
-                    secondElement,
-                    secondElement + 1,
-                    (i + 1) * pointsSum + j
+                    i * edgesSumInRow + j,
+                    leftEdge,
+                    leftEdge + 1,
+                    (i + 1) * edgesSumInRow + j
                 };
 
                 currentElement.Edges = egdes;

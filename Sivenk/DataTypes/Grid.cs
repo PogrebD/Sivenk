@@ -93,18 +93,18 @@ public class Grid
         {
             throw new ArgumentException();
         }
-        
-        int sum = Bounds.ElementsNumX + Bounds.PointsNumX;
+
+        int edgesSumInRow = grid.Bounds.EdgesHorizontalNumX + grid.Bounds.EdgesVerticalNumX;
 
         int[] points = new int[2];
-        if (edgeId % sum < Bounds.ElementsNumX)
+        if (edgeId % edgesSumInRow < Bounds.EdgesHorizontalNumX)
         {
-            points[0] = edgeId - (edgeId / sum * Bounds.ElementsNumX);
+            points[0] = edgeId - (edgeId / edgesSumInRow * Bounds.ElementsNumX); // hr
             points[1] = points[0] + 1;
         }
         else
         {
-            points[0] = edgeId - (edgeId / sum + 1) * Bounds.ElementsNumX;
+            points[0] = edgeId - (edgeId / edgesSumInRow + 1) * Bounds.ElementsNumX; //vr
             points[1] = points[0] + Bounds.PointsNumX;
         }
         
