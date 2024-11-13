@@ -17,7 +17,11 @@ public class Grid
 
     public int[] GetEdgeIds(int elementId)
     {
-        return Elements[elementId].Edges;
+        var edges = Elements[elementId].Edges;
+
+        Console.WriteLine($"Input {nameof(elementId)}: {elementId + 1} => {edges[0] + 1}, {edges[1] + 1}, {edges[2] + 1}, {edges[3] + 1}");
+
+        return edges;
     }
 
     public IList<int> GetElementIds(int edgeId)
@@ -53,11 +57,6 @@ public class Grid
         return result;
     }
 
-    private bool IsElementIdValid(int elementId)
-    {
-        return elementId >= 0 && elementId < Bounds.ElementsNum;
-    }
-
     public int GetEdgeId(int firstPointId, int secondPointId)
     {
         if (secondPointId < firstPointId)
@@ -71,7 +70,7 @@ public class Grid
         {
             lineLevel = 1;
         }
-        
+
         if (pointsIdDifference == 1 && secondPointId % Bounds.PointsNumX != 0)
         {
             lineLevel = 0;
@@ -80,13 +79,13 @@ public class Grid
         if (lineLevel != -1)
         {
             int edgeId = firstPointId + (firstPointId / Bounds.PointsNumX + lineLevel) * Bounds.ElementsNumX;
-            Console.WriteLine($"EdgeId: {edgeId}");
+            Console.WriteLine($"Input points: {firstPointId}, {secondPointId} => EdgeId: {edgeId + 1}");
             return edgeId;
         }
-        
+
         throw new ArgumentException();
     }
-    
+
     public int[] GetPointsId(int edgeId)
     {
         if (edgeId < 0 || edgeId >= Bounds.EdgesNum)
@@ -94,7 +93,7 @@ public class Grid
             throw new ArgumentException();
         }
 
-        int edgesSumInRow = grid.Bounds.EdgesHorizontalNumX + grid.Bounds.EdgesVerticalNumX;
+        int edgesSumInRow = Bounds.EdgesHorizontalNumX + Bounds.EdgesVerticalNumX;
 
         int[] points = new int[2];
         if (edgeId % edgesSumInRow < Bounds.EdgesHorizontalNumX)
@@ -107,8 +106,13 @@ public class Grid
             points[0] = edgeId - (edgeId / edgesSumInRow + 1) * Bounds.ElementsNumX; //vr
             points[1] = points[0] + Bounds.PointsNumX;
         }
-        
-        Console.WriteLine($"Points: {points[0]}, {points[1]}");
+
+        Console.WriteLine($"Input Edge: {edgeId + 1} => Points: {points[0]}, {points[1]}");
         return points;
+    }
+
+    private bool IsElementIdValid(int elementId)
+    {
+        return elementId >= 0 && elementId < Bounds.ElementsNum;
     }
 }

@@ -11,7 +11,7 @@ namespace Sivenk;
 
 public class Application
 {
-    public Grid Run(Configuration config)
+    public void Run(Configuration config, out Grid grid)
     {
         string[] inputPaths = [
             Path.Combine(PathsProvider.InputFolder, config.inputFolderName, "input.txt"),
@@ -29,7 +29,7 @@ public class Application
             : new WithoutSplitting();
 
         GridBuilder builder = new();
-        Grid grid = builder
+        grid = builder
             .SetBounds(gridBuildingData.bounds)
             .SetElements(gridBuildingData.elements)
             .SetPoints(gridBuildingData.points)
@@ -48,8 +48,6 @@ public class Application
         {
             ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");
         }
-
-        return grid;
     }
     
     void ShowGrid(String filePath, string? pointsPath = null, string? elementsPath = null)

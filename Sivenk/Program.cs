@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-using System.Globalization;
+﻿using System.Globalization;
 using Sivenk;
 using Sivenk.DataTypes;
-using Sivenk.Paths;
 
 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-Configuration configuration = new Configuration()
+Configuration configuration = new()
 {
     openPythonProject = false,
     shouldSplitGrid = true,
@@ -14,5 +12,11 @@ Configuration configuration = new Configuration()
     outputFolderName = "output",
 };
 
-Application app = new Application();
-Grid grid = app.Run(configuration);
+Application app = new();
+Grid grid;
+
+app.Run(configuration, out grid);
+
+grid.GetEdgeId(22, 23);
+grid.GetPointsId(20);
+grid.GetEdgeIds(3);
