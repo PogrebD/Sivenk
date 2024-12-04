@@ -10,8 +10,14 @@ public class GridBuildingDataParser
         Bounds bounds = ParseBounds(inputData.Lines);
         Point[] points = ParsePoints(inputData.Lines, bounds);
         Element[] elements = ParseElements(inputData.Area, bounds);
+        Material[] materials = ParseMaterials(inputData.Material);
 
-        return new GridBuildingData(bounds, points, elements);
+        return new GridBuildingData(bounds, points, elements, materials);
+    }
+
+    private Material[] ParseMaterials(Material[] inputDataMaterial)
+    {
+        return inputDataMaterial;
     }
 
     private Point[] ParsePoints(Line[] inputDataLines, Bounds bounds)

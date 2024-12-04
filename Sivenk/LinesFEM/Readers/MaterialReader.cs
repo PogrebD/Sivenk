@@ -17,9 +17,8 @@ public class MaterialReader
 
             input.Add(
                 new Material(int.Parse(elemArray[0]),
-                    double.Parse(elemArray[1]) * double.Parse(elemArray[2]),
-                    double.Parse(elemArray[3]),
-                    double.Parse(elemArray[4])
+                    double.Parse(elemArray[1]),
+                    double.Parse(elemArray[2])
                     ));
         }
         return [.. input];

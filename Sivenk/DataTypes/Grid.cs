@@ -7,12 +7,14 @@ public class Grid
     public Bounds Bounds;
     public Element[] Elements;
     public Point[] Points;
+    public Material[] Materials;
 
-    public Grid(Bounds bounds, Element[] elements, Point[] points)
+    public Grid(Bounds bounds, Element[] elements, Point[] points, Material[] materials)
     {
         Bounds = bounds;
         Elements = elements;
         Points = points;
+        Materials = materials;
     }
 
     public int[] GetEdgeIds(int elementId)

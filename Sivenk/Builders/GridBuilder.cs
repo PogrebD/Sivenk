@@ -12,7 +12,8 @@ public class GridBuilder
     private Bounds _bounds;
     private Element[] _elements = [];
     private Point[] _points = [];
-    
+    private Material[] _materials = [];
+
     public GridBuilder SetGridSplitter(IGridSplitter newSplitter)
     {
         _gridSplitter = newSplitter;
@@ -36,15 +37,19 @@ public class GridBuilder
         _points = points;
         return this;
     }
-    
+
+    public GridBuilder SetMaterials(Material[] material)
+    {
+        _materials = material;
+        return this;
+    }
+
     public Grid Build()
     {
-        Grid grid = new(_bounds, _elements, _points);
+        Grid grid = new(_bounds, _elements, _points, _materials);
         Grid splittedGrid = _gridSplitter.Split(grid);
-        
+
         _edgeEnumerator.EnumerateEdges(splittedGrid);
         return splittedGrid;
     }
-
-    
 }

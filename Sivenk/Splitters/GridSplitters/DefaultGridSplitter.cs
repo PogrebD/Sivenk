@@ -49,7 +49,7 @@ public class DefaultGridSplitter : IGridSplitter
             iterationData.PrevElemsY += iterationData.CurrentSplitY.IntervalsNum;
         }
         
-        Grid result = new(bounds, elements, points);
+        Grid result = new(bounds, elements, points, sourceGrid.Materials);
         return result;
     }
     
