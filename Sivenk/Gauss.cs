@@ -1,28 +1,33 @@
 using MathLibrary.DataTypes;
+using MathLibrary.DataTypes.Internal;
 
 namespace Sivenk;
 
 public class Gauss2D 
 {
+    private readonly GaussConfig _config;
+
     public Gauss2D(GaussConfig config)
     {
         if (config.Segments < 1)
         {
             throw new ArgumentException("The number of segments must be at least 1.");
         }
+
+        _config = config;
     }
 
-    public double Calculate(Func<Point, double> f, Line1D xInterval, Line1D
+    public double Calculate(Func<Point, double> f, Interval1D xInterval, Interval1D
         yInterval)
     {
         var integral = 0d;
         var xSegmentLength = (xInterval.End - xInterval.Start) /
-                             Config.Segments;
+                             _config.Segments;
         var ySegmentLength = (yInterval.End - yInterval.Start) /
-                             Config.Segments;
-        for (var i = 0; i < Config.Segments; i++)
+                             _config.Segments;
+        for (var i = 0; i < _config.Segments; i++)
         {
-            for (var j = 0; j < Config.Segments; j++)
+            for (var j = 0; j < _config.Segments; j++)
             {
                 var xStart = xInterval.Start + i * xSegmentLength;
                 var xEnd = xStart + xSegmentLength;
@@ -36,7 +41,7 @@ public class Gauss2D
         return integral;
     }
 
-    private double CalculateOnSubinterval(Func<Point2D, double> f, double
+    private double CalculateOnSubinterval(Func<Point, double> f, double
             xStart, double xEnd, double yStart,
         double yEnd)
     {
@@ -45,17 +50,17 @@ public class Gauss2D
         var xMid = (xStart + xEnd) / 2;
         var yHalfLength = (yEnd - yStart) / 2;
         var yMid = (yStart + yEnd) / 2;
-        for (var i = 0; i < Config.Nodes.Count; i++)
+        for (var i = 0; i < _config.Nodes.Count; i++)
         {
-            var y = (yHalfLength * Config.Nodes[i] + yMid);
+            var y = (yHalfLength * _config.Nodes[i] + yMid);
             var xSum = 0d;
-            for (var j = 0; j < Config.Nodes.Count; j++)
+            for (var j = 0; j < _config.Nodes.Count; j++)
             {
-                var x = xHalfLength * Config.Nodes[j] + xMid;
-                xSum += Config.Weights[j] * f(new Point2D(x, y));
+                var x = xHalfLength * _config.Nodes[j] + xMid;
+                xSum += _config.Weights[j] * f(new Point(x, y));
             }
 
-            ySum += Config.Weights[i] * xHalfLength * xSum;
+            ySum += _config.Weights[i] * xHalfLength * xSum;
         }
 
         return yHalfLength * ySum;

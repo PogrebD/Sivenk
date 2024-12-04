@@ -1,3 +1,12 @@
 ﻿namespace MathLibrary.DataTypes.Internal;
 
-public readonly record struct Interval(Point LeftBorder, Point RightBorder);
+public class Interval
+{
+    public Point LeftBorder;
+    public Point RightBorder;
+    public Interval(Point leftBorder, Point rightBorder)
+    {
+        LeftBorder = leftBorder;
+        RightBorder = rightBorder;
+    }
+}
