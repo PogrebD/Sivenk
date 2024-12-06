@@ -7,8 +7,8 @@ public class Point : IEnumerable<double>
     private double[] _values;
     public int Size => _values.Length;
     
-    public double X => _values[0];
-    public double Y => _values[1];
+    public double R => _values[0];
+    public double Z => _values[1];
 
     public Point(params double[] values) => _values = values;
     
