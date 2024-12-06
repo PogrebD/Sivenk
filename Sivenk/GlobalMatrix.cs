@@ -7,7 +7,6 @@ public class GlobalMatrix
     public double[] _globaleATriangle;
     public double[] _globaleAdiag;
     public double[] _globalVectorB;
-    public double[] _globalVectorD;
     public List<int> ig;
     private List<int> ig2;
     public List<int> jg;
@@ -24,7 +23,6 @@ public class GlobalMatrix
         _globaleAdiag = new double[ig.Count];
         _globaleATriangle = new double[jg.Count];
         _globalVectorB = new double[ig.Count];
-        _globalVectorD = new double[ig.Count];
         LocalMatricesInsertion();
     }
 
@@ -73,7 +71,7 @@ public class GlobalMatrix
             for (int j = 0; j < 4; j++)
             {
                 _globaleAdiag[_grid.Elements[k].IdPoints[j]] +=
-                    _grid.Elements[k].Mass[j, j] + _grid.Elements[k].Stiffness[j, j];
+                    _grid.Elements[k].AMatrix[j, j];
             }
 
             for (int i = 0; i < 4; i++)
@@ -87,7 +85,7 @@ public class GlobalMatrix
                         ibeg++;
                     }
 
-                    _globaleATriangle[ibeg] += _grid.Elements[k].Mass[i, j] + _grid.Elements[k].Stiffness[i, j];
+                    _globaleATriangle[ibeg] += _grid.Elements[k].AMatrix[i, j];
                     ibeg++;
                 }
             }
