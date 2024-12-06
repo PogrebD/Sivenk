@@ -38,32 +38,6 @@ public class SecondBoundaryConditions
            { 1, 2}
         };
 
-        return Multiply(Multiply(Matrix, _theta[thetaIndex]), L / 6);
-    }
-
-    public static double[] Multiply(double[] vector, double coefficient)
-    {
-        var result = new double[4];
-
-        for (var i = 0; i < vector.Length / (vector.GetUpperBound(0) + 1); i++)
-        {
-            result[i] = vector[i] * coefficient;
-        }
-
-        return result;
-    }
-
-    public static double[] Multiply(double[,] matrix, double[] vector)
-    {
-        var result = new double[vector.Length];
-        for (var i = 0; i < matrix.GetUpperBound(0) + 1; i++)
-        {
-            for (var j = 0; j < matrix.Length / (matrix.GetUpperBound(0) + 1); j++)
-            {
-                result[i] += matrix[i, j] * vector[j];
-            }
-        }
-
-        return result;
+        return UtilsLibrary.Multiply(UtilsLibrary.Multiply(Matrix, _theta[thetaIndex]), L / 6);
     }
 }
