@@ -155,7 +155,7 @@ public class LocalMatrix
         var funVector = new double[4];
         for (int i = 0; i < 4; i++)
         {
-            funVector[i] = func.funRight(_grid.Points[gridElement.IdPoints[i]][0],
+            funVector[i] = func.FunRight(_grid.Points[gridElement.IdPoints[i]][0],
                 _grid.Points[gridElement.IdPoints[i]][1]);
         }
 
