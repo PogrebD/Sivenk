@@ -70,7 +70,7 @@ public class ResultInPoint
 
         for (int i = 0; i < 4; i++)
         {
-            funcValues[i] = Fi(ksi, eta, i);
+            funcValues[i] = UtilsLibrary.Fi(ksi, eta, i);
         }
 
         var result = 0d;
@@ -84,17 +84,6 @@ public class ResultInPoint
 
         return result;
     }
-
-    private double W(double t, int n) => n == 1 ? 1 - t : t;
-
-    private double Fi(double psi, double nu, int n) => n switch
-    {
-        0 => W(psi, 1) * W(nu, 1),
-        1 => W(psi, 2) * W(nu, 1),
-        2 => W(psi, 1) * W(nu, 2),
-        3 => W(psi, 2) * W(nu, 2),
-        _ => throw new NotImplementedException(),
-    };
 
     private bool ElementHas(Element element, Point point)
     {
