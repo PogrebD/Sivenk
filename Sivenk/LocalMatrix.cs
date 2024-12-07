@@ -11,8 +11,20 @@ public class LocalMatrix
     public LocalMatrix(Grid grid)
     {
         _grid = grid;
+        CalcLocalMatrices();
     }
 
+    public void CalcLocalMatrices()
+    {
+        for (int i = 0; i < _grid.Elements.Count(); i++)
+        {
+            _grid.Elements[i] = new Element(
+                UtilsLibrary.Sum(CalcMassMatrixGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].gamma),
+                    CalcStiffnessMatrixGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].Lambda)),
+                CalcVectorGauss(_grid.Elements[i]), _grid.Elements[i]);
+        }
+    }
+    
     double a(int n1, int n2, int n3, int n4, Element gridElement)
     {
         return ((_grid.Points[gridElement.IdPoints[n1]][0] - _grid.Points[gridElement.IdPoints[n2]][0]) *
@@ -121,16 +133,5 @@ public class LocalMatrix
         }
 
         return UtilsLibrary.Multiply(CalcMassMatrixGaussWithoutGamma(gridElement), funVector);
-    }
-
-    public void CalcLocalMatrices()
-    {
-        for (int i = 0; i < _grid.Elements.Count(); i++)
-        {
-            _grid.Elements[i] = new Element(
-                UtilsLibrary.Sum(CalcMassMatrixGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].gamma),
-                    CalcStiffnessMatrixGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].Lambda)),
-                CalcVectorGauss(_grid.Elements[i]), _grid.Elements[i]);
-        }
     }
 }

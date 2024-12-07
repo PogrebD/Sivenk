@@ -1,6 +1,10 @@
 ﻿using System.Diagnostics;
+using MathLibrary.DataTypes;
+using Sivenk.BoundaryConditions;
 using Sivenk.Builders;
 using Sivenk.DataTypes;
+using Sivenk.generators;
+using Sivenk.InputBC;
 using Sivenk.LinesFEM;
 using Sivenk.LinesFEM.Readers;
 using Sivenk.Paths;
@@ -17,6 +21,7 @@ public class Application
             Path.Combine(PathsProvider.InputFolder, config.inputFolderName, "input.txt"),
             Path.Combine(PathsProvider.InputFolder, config.inputFolderName, "material.txt")
         ];
+
         
         IInputDataReader reader = new Reader(inputPaths);
         InputData inputData = reader.Input();
@@ -36,6 +41,15 @@ public class Application
             .SetGridSplitter(gridSplitter)
             .Build();
 
+        
+        Generator generator = new Generator();
+        generator.Generate(grid);
+        BoundaryConditionsProvider provider = new BoundaryConditionsProvider();
+        BcInputer inputerBc = new BcInputer();
+        inputerBc.Input(provider);
+        
+        DirectTask(grid, provider); 
+        
         string[] outputPaths = [
             Path.Combine(PathsProvider.OutputFolder, config.outputFolderName, "points.txt"),
             Path.Combine(PathsProvider.OutputFolder, config.outputFolderName, "elements.txt")
@@ -47,6 +61,31 @@ public class Application
         if (config.openPythonProject)
         {
             ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");
+        }
+    }
+
+    void DirectTask(Grid grid, BoundaryConditionsProvider providerBC)
+    {
+        LocalMatrix localMatrices = new(grid);
+        GlobalMatrix globalMatrices = new(grid);
+
+        // краевые и слау
+        providerBC.Applay(globalMatrices,grid);
+        Slau slau = new(globalMatrices, grid.Points.Length);
+        
+        Point[] Points = [new Point(2,3)];
+        PrintFileResultPointST(slau.q, grid, Points);
+    }
+
+    static void PrintFileResultPointST(double[] result, Grid grid, Point[] points)
+    {
+        var resulter = new ResultInPoint(grid, result);
+        for (var i = 0; i < points.Length / 2; i++)
+        {
+            var res = resulter.Calculate(points[i]);
+            var str = $"{res}\t";
+
+            File.AppendAllText(  PathsProvider.outFolder , str);
         }
     }
     

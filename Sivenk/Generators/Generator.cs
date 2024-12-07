@@ -5,7 +5,7 @@ namespace Sivenk.generators
 {
     internal class Generator
     {
-        public Generator(Grid grid)
+        public Generator()
         {
             bc1Generator = new BC1Generator();
             bc2Generator = new BC2Generator();
