@@ -38,10 +38,10 @@ public class Application
             .SetBounds(gridBuildingData.bounds)
             .SetElements(gridBuildingData.elements)
             .SetPoints(gridBuildingData.points)
+            .SetMaterials(gridBuildingData.materials)
             .SetGridSplitter(gridSplitter)
             .Build();
 
-        
         Generator generator = new Generator();
         generator.Generate(grid);
         BoundaryConditionsProvider provider = new BoundaryConditionsProvider();

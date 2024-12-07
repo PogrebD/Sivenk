@@ -11,6 +11,7 @@ public class LocalMatrix
     public LocalMatrix(Grid grid)
     {
         _grid = grid;
+        _gauss2D = new Gauss2D(GaussConfig.Gauss4(2));
         CalcLocalMatrices();
     }
 
@@ -92,9 +93,9 @@ public class LocalMatrix
     private double[,] CalcMassMatrixGaussWithoutGamma(Element gridElement)
     {
         var result = new double[4, 4];
-        for (var i = 1; i <= 4; i++)
+        for (var i = 0; i < 4; i++)
         {
-            for (var j = 1; j <= 4; j++)
+            for (var j = 0; j < 4; j++)
             {
                 result[i, j] = IntegralMass(gridElement, i, j);
             }
@@ -111,9 +112,9 @@ public class LocalMatrix
     private double[,] CalcStiffnessMatrixGauss(Element gridElement, double lambda)
     {
         var result = new double[4, 4];
-        for (var i = 1; i <= 4; i++)
+        for (var i = 0; i < 4; i++)
         {
-            for (var j = 1; j <= 4; j++)
+            for (var j = 0; j < 4; j++)
             {
                 result[i, j] = IntegralStiffnes(gridElement, i, j) * lambda;
             }

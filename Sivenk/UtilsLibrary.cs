@@ -68,10 +68,10 @@ public static class UtilsLibrary
 
     public static double DevFi(double t, int n) => n switch
     {
-        1 => t - 1,
-        2 => 1 - t,
-        3 => -t,
-        4 => t,
+        0 => t - 1,
+        1 => 1 - t,
+        2 => -t,
+        3 => t,
         _ => throw new NotImplementedException(),
     };
 }
