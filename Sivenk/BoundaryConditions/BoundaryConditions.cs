@@ -14,10 +14,8 @@ namespace Sivenk.BoundaryConditions
     {
         public Bc1 bc1;
         public Bc2 bc2;
-        BcInputer bcInputer;
         public BoundaryConditions(GlobalMatrix globalMatrices, Grid grid)
         {
-            bcInputer = new(this);
             bc2.Apply(globalMatrices, grid);
             bc1.Apply(globalMatrices, grid);
         }
@@ -53,7 +51,7 @@ namespace Sivenk.BoundaryConditions
                     //globalMatrices._globalVectorB[nodeIndices[i][k]] = Func.u(grid.nodes[nodeIndices[i][k]].r, grid.nodes[nodeIndices[i][k]].z, grid.time.timeSloy[t]);
                     globalMatrices._globalVectorB[nodeIndices[i][k]] = u[i];
                     globalMatrices._globaleAdiag[nodeIndices[i][k]] = 1;
-                    for (int j = nodeIndices[i][k] + 1; j < grid.nodes.Count; j++)
+                    for (int j = nodeIndices[i][k] + 1; j < grid.Points.Length; j++)
                     {
                         for (int h = globalMatrices.ig[j - 1]; h < globalMatrices.ig[j]; h++)
                         {

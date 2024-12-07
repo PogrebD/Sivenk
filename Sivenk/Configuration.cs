@@ -5,6 +5,7 @@ public class Configuration
     public string inputFolderName = "Default";
     private string _outputFolderName;
     
+    
     public string outputFolderName
     {
         get => _outputFolderName ?? inputFolderName;

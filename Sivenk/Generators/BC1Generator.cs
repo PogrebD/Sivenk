@@ -1,11 +1,9 @@
-﻿using praktika.generators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Sivenk.DataTypes;
+using Sivenk.generators;
+using Sivenk.Paths;
 
-namespace practika.Generators
+namespace Sivenk.Generators
 {
     internal class BC1Generator : IGenerator
     {
@@ -23,29 +21,29 @@ namespace practika.Generators
             //int n = (grid.dischargeFactor.NElemZ) * 2;
             
             //right down
-            int n = (grid.dischargeFactor.NElemZ) + (grid.dischargeFactor.NElemR);
+            int n = (grid.Bounds.EdgesHorizontalNumX) + (grid.Bounds.EdgesVerticalNumY);
             
-            File.WriteAllText(Config.bc1Path, n.ToString() + "\n");
-            for (int i = 0; i < grid.dischargeFactor.NElemR; i++)
+            File.WriteAllText(PathsProvider.BC1Folder, n.ToString() + "\n");
+            for (int i = 0; i < grid.Bounds.EdgesHorizontalNumX; i++)
             {
                 //down
                 string str = string.Format("{0} {1} {2}\n", i, i + 1, down);
-                File.AppendAllText(Config.bc1Path, str);
+                File.AppendAllText(PathsProvider.BC1Folder, str);
 
                 //top
                 //string str2 = string.Format("{0} {1} {2}\n", (grid.dischargeFactor.NElemR + 1) * grid.dischargeFactor.NElemZ + i, (grid.dischargeFactor.NElemR + 1) * grid.dischargeFactor.NElemZ + i + 1, top);
                 //File.AppendAllText(Config.bc1Path, str2);
             }
 
-            for (int i = 0; i < grid.dischargeFactor.NElemZ; i++)
+            for (int i = 0; i < grid.Bounds.EdgesVerticalNumY; i++)
             {
                 //left
                 //string str = string.Format("{0} {1} {2}\n", i * (grid.dischargeFactor.NElemR + 1), (i + 1) * (grid.dischargeFactor.NElemR + 1), left);
                 //File.AppendAllText(Config.bc1Path, str);
 
                 //right
-                string str2 = string.Format("{0} {1} {2}\n", i * (grid.dischargeFactor.NElemR + 1) + grid.dischargeFactor.NElemR, (i + 1) * (grid.dischargeFactor.NElemR + 1) + grid.dischargeFactor.NElemR, right);
-                File.AppendAllText(Config.bc1Path, str2);
+                string str2 = string.Format("{0} {1} {2}\n", i * (grid.Bounds.EdgesHorizontalNumX + 1) + grid.Bounds.EdgesHorizontalNumX, (i + 1) * (grid.Bounds.EdgesHorizontalNumX + 1) + grid.Bounds.EdgesHorizontalNumX, right);
+                File.AppendAllText(PathsProvider.BC1Folder, str2);
             }
         }
     }
