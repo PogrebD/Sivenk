@@ -51,8 +51,8 @@ public class LocalMatrix
         var a1 = a(1, 0, 3, 2, gridElement);
         var a2 = a(3, 1, 2, 0, gridElement);
 
-        Interval1D xInterval = new Interval1D(new Point(0, 0), new Point(1, 0));
-        Interval1D yInterval = new Interval1D(new Point(0, 0), new Point(0, 1));
+        Interval1D xInterval = new Interval1D(new Point(0), new Point(1));
+        Interval1D yInterval = new Interval1D(new Point(0), new Point(1));
 
         return _gauss2D.Calculate(
             (point => UtilsLibrary.Fi(point[0], point[1], n1) * UtilsLibrary.Fi(point[0], point[1], n2) * double.Sign(a0) *
@@ -74,8 +74,8 @@ public class LocalMatrix
         var b5 = b56(0, gridElement);
         var b6 = b56(1, gridElement);
 
-        Interval1D xInterval = new Interval1D(new Point(0, 0), new Point(1, 0));
-        Interval1D yInterval = new Interval1D(new Point(0, 0), new Point(0, 1));
+        Interval1D xInterval = new Interval1D(new Point(0), new Point(1));
+        Interval1D yInterval = new Interval1D(new Point(0), new Point(1));
 
         var g1 = _gauss2D.Calculate(
             (point => (UtilsLibrary.DevFi(point[1], i) * (b6 * point[0] + b3) - UtilsLibrary.DevFi(point[0], i) * (b6 * point[1] + b4)) *
