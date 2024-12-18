@@ -6,7 +6,7 @@ Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
 Configuration configuration = new()
 {
-    openPythonProject = false,
+    openPythonProject = true,
     shouldSplitGrid = true,
     inputFolderName = "txt",
     outputFolderName = "output",
