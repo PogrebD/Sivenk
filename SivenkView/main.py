@@ -67,7 +67,7 @@ def plot_points_and_connections(ax, points, connections):
 
 def plot_isolines(ax, X, Y, Z):
     ax.set_aspect('equal', 'datalim')
-    ax.contour(X, Y, Z, colors='black', linewidths=0.8, levels=10)
+    ax.contour(X, Y, Z, colors='black', linewidths=0.8, levels=10, linestyles='dotted')
 
 
 file_path = R'..\Sivenk\output\Result.txt'
