@@ -38,6 +38,6 @@ public class SecondBoundaryConditions
            { 1, 2}
         };
 
-        return UtilsLibrary.Multiply(UtilsLibrary.Multiply(Matrix, _theta[thetaIndex]), L / 6);
+        return UtilsLibrary.Multiply(UtilsLibrary.Multiply(Matrix, L / 6), _theta[thetaIndex]);
     }
 }

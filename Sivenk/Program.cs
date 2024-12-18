@@ -6,7 +6,7 @@ Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
 Configuration configuration = new()
 {
-    openPythonProject = false,
+    openPythonProject = true,
     shouldSplitGrid = true,
     inputFolderName = "txt",
     outputFolderName = "output",
@@ -19,6 +19,6 @@ app.Run(configuration, out grid);
 
 //LocalMatrix localMatrix = new LocalMatrix((double x, double y) => x + y);
 
-grid.GetEdgeId(22, 23);
-grid.GetPointsId(20);
-grid.GetEdgeIds(3);
+//grid.GetEdgeId(22, 23);
+//grid.GetPointsId(20);
+//grid.GetEdgeIds(3);

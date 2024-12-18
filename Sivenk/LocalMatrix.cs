@@ -11,21 +11,23 @@ public class LocalMatrix
     public LocalMatrix(Grid grid)
     {
         _grid = grid;
-        _gauss2D = new Gauss2D(GaussConfig.Gauss4(2));
-        CalcLocalMatrices();
+        _gauss2D = new Gauss2D(GaussConfig.Gauss4(10));
+        CalcLocalMatrices(grid);
     }
 
-    public void CalcLocalMatrices()
+    public void CalcLocalMatrices(Grid grid)
     {
         for (int i = 0; i < _grid.Elements.Count(); i++)
         {
-            _grid.Elements[i] = new Element(
-                UtilsLibrary.Sum(CalcMassMatrixGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].gamma),
-                    CalcStiffnessMatrixGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].Lambda)),
-                CalcVectorGauss(_grid.Elements[i]), _grid.Elements[i]);
+            var M = CalcMassMatrixGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].gamma);
+            var G = CalcStiffnessMatrixGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].Lambda);
+            var A = UtilsLibrary.Sum(M, G);
+            var B = CalcVectorGauss(_grid.Elements[i], _grid.Materials[_grid.Elements[i].Material].gamma, _grid.Materials[_grid.Elements[i].Material].Lambda);
+
+            grid.Elements[i] = new Element(A, B, _grid.Elements[i]);
         }
     }
-    
+
     double a(int n1, int n2, int n3, int n4, Element gridElement)
     {
         return ((_grid.Points[gridElement.IdPoints[n1]][0] - _grid.Points[gridElement.IdPoints[n2]][0]) *
@@ -41,8 +43,8 @@ public class LocalMatrix
 
     double b56(int n, Element gridElement)
     {
-        return _grid.Points[gridElement.IdPoints[0]][n] - _grid.Points[gridElement.IdPoints[0]][n] -
-            _grid.Points[gridElement.IdPoints[0]][n] + _grid.Points[gridElement.IdPoints[0]][n];
+        return _grid.Points[gridElement.IdPoints[0]][n] - _grid.Points[gridElement.IdPoints[1]][n] -
+            _grid.Points[gridElement.IdPoints[2]][n] + _grid.Points[gridElement.IdPoints[3]][n];
     }
 
     double IntegralMass(Element gridElement, int n1, int n2)
@@ -51,16 +53,15 @@ public class LocalMatrix
         var a1 = a(1, 0, 3, 2, gridElement);
         var a2 = a(3, 1, 2, 0, gridElement);
 
-        Interval1D xInterval = new Interval1D(new Point(0, 0), new Point(1, 0));
-        Interval1D yInterval = new Interval1D(new Point(0, 0), new Point(0, 1));
+        Interval1D xInterval = new Interval1D(new Point(0), new Point(1));
+        Interval1D yInterval = new Interval1D(new Point(0), new Point(1));
 
         return _gauss2D.Calculate(
-            (point => UtilsLibrary.Fi(point[0], point[1], n1) * UtilsLibrary.Fi(point[0], point[1], n2) * double.Sign(a0) *
-                      (a0 + a1 * point[0] + a2 * point[1])),
+            (point => UtilsLibrary.Fi(point[0], point[1], n1) * UtilsLibrary.Fi(point[0], point[1], n2) *
+                      double.Sign(a0) * (a0 + a1 * point[0] + a2 * point[1])),
             xInterval, yInterval);
     }
-
-
+    
     double IntegralStiffnes(Element gridElement, int i, int j)
     {
         var a0 = a(1, 0, 2, 0, gridElement);
@@ -74,17 +75,21 @@ public class LocalMatrix
         var b5 = b56(0, gridElement);
         var b6 = b56(1, gridElement);
 
-        Interval1D xInterval = new Interval1D(new Point(0, 0), new Point(1, 0));
-        Interval1D yInterval = new Interval1D(new Point(0, 0), new Point(0, 1));
+        Interval1D xInterval = new Interval1D(new Point(0), new Point(1));
+        Interval1D yInterval = new Interval1D(new Point(0), new Point(1));
 
         var g1 = _gauss2D.Calculate(
-            (point => (UtilsLibrary.DevFi(point[1], i) * (b6 * point[0] + b3) - UtilsLibrary.DevFi(point[0], i) * (b6 * point[1] + b4)) *
-                      (UtilsLibrary.DevFi(point[0], j) * (b6 * point[0] + b3) - UtilsLibrary.DevFi(point[1], j) * (b6 * point[1] + b4)) *
+            (point => (UtilsLibrary.DevFi(point[1], i, 0) * (b6 * point[0] + b3) -
+                       UtilsLibrary.DevFi(point[0], i, 1) * (b6 * point[1] + b4)) *
+                      (UtilsLibrary.DevFi(point[1], j, 0) * (b6 * point[0] + b3) -
+                       UtilsLibrary.DevFi(point[0], j, 1) * (b6 * point[1] + b4)) *
                       (1 / (double.Sign(a0) * (a0 + a1 * point[0] + a2 * point[1])))),
             xInterval, yInterval);
         var g2 = _gauss2D.Calculate(
-            (point => (UtilsLibrary.DevFi(point[1], i) * (b5 * point[0] + b2) - UtilsLibrary.DevFi(point[0], i) * (b5 * point[1] + b1)) *
-                      (UtilsLibrary.DevFi(point[0], j) * (b5 * point[0] + b2) - UtilsLibrary.DevFi(point[1], j) * (b5 * point[1] + b1)) *
+            (point => (UtilsLibrary.DevFi(point[0], i, 1) * (b5 * point[1] + b2) -
+                       UtilsLibrary.DevFi(point[1], i, 0) * (b5 * point[0] + b1)) *
+                      (UtilsLibrary.DevFi(point[0], j, 1) * (b5 * point[1] + b2) -
+                       UtilsLibrary.DevFi(point[1], j, 0) * (b5 * point[0] + b1)) *
                       (1 / (double.Sign(a0) * (a0 + a1 * point[0] + a2 * point[1])))),
             xInterval, yInterval);
         return g1 + g2;
@@ -123,14 +128,14 @@ public class LocalMatrix
         return result;
     }
 
-    private double[] CalcVectorGauss(Element gridElement)
+    private double[] CalcVectorGauss(Element gridElement, double gamma, double lambda)
     {
         Func func = new();
         var funVector = new double[4];
         for (int i = 0; i < 4; i++)
         {
             funVector[i] = func.FunRight(_grid.Points[gridElement.IdPoints[i]][0],
-                _grid.Points[gridElement.IdPoints[i]][1]);
+                _grid.Points[gridElement.IdPoints[i]][1], gamma, lambda);
         }
 
         return UtilsLibrary.Multiply(CalcMassMatrixGaussWithoutGamma(gridElement), funVector);

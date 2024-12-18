@@ -48,8 +48,6 @@ public class Application
         BcInputer inputerBc = new BcInputer();
         inputerBc.Input(provider);
         
-        DirectTask(grid, provider); 
-        
         string[] outputPaths = [
             Path.Combine(PathsProvider.OutputFolder, config.outputFolderName, "points.txt"),
             Path.Combine(PathsProvider.OutputFolder, config.outputFolderName, "elements.txt")
@@ -57,11 +55,11 @@ public class Application
         
         IGridWriter outputer = new Writer(outputPaths);
         outputer.Print(grid);
-
-        if (config.openPythonProject)
+        DirectTask(grid, provider); 
+        /*if (config.openPythonProject)
         {
             ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");
-        }
+        }*/
     }
 
     void DirectTask(Grid grid, BoundaryConditionsProvider providerBC)
@@ -73,19 +71,54 @@ public class Application
         providerBC.Applay(globalMatrices,grid);
         Slau slau = new(globalMatrices, grid.Points.Length);
         
-        Point[] Points = [new Point(2,3)];
+        Point[] Points = [new Point(3.3 , 2.3)];
         PrintFileResultPointST(slau.q, grid, Points);
+        PrintFileResult(slau.q, grid);
+        PrintFileTrueResult(grid);
     }
 
     static void PrintFileResultPointST(double[] result, Grid grid, Point[] points)
     {
+        File.WriteAllText(PathsProvider.outFolder,"\n");
         var resulter = new ResultInPoint(grid, result);
-        for (var i = 0; i < points.Length / 2; i++)
+        Func fun = new Func();
+        for (var i = 0; i < points.Length; i++)
         {
             var res = resulter.Calculate(points[i]);
-            var str = $"{res}\t";
+            var resTrue = fun.FunU(points[i].R, points[i].Z);
+            var str = $"{res}\n{resTrue}";
 
             File.AppendAllText(  PathsProvider.outFolder , str);
+        }
+    }
+    
+    static void PrintFileResult(double[] result, Grid grid)
+    {
+        File.WriteAllText(PathsProvider.outAllFolder,"\n");
+        /*for (int i = grid.Bounds.PointsNumY- 1; i >=0 ; i--)
+        {
+            for (int j = 0; j < grid.Bounds.PointsNumX; j++)
+            {
+                var str = $"{result[j+i*(grid.Bounds.PointsNumX)]}\t";
+                File.AppendAllText(  PathsProvider.outAllFolder , str);
+            }
+        }*/
+
+        for (int i = 0; i < result.Length; i++)
+        {
+            var str = $"{grid.Points[i].R} {grid.Points[i].Z} {result[i]}\n";
+            File.AppendAllText(PathsProvider.outAllFolder, str);
+        }
+    }
+    
+    static void PrintFileTrueResult(Grid grid)
+    {
+        File.WriteAllText(PathsProvider.trueFolder,"\n");
+        Func fun = new Func();
+        for (int i = 0; i < grid.Points.Length; i++)
+        {
+            var str2 = $"{fun.FunU(grid.Points[i][0], grid.Points[i][1])}\n";
+            File.AppendAllText(PathsProvider.trueFolder, str2);
         }
     }
     

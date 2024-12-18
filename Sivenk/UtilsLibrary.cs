@@ -1,10 +1,12 @@
-﻿namespace Sivenk;
+﻿using System.Diagnostics;
+
+namespace Sivenk;
 
 public static class UtilsLibrary
 {
     public static double[,] Multiply(double[,] matrix, double coefficient)
     {
-        var result = new double[4, 4];
+        var result = matrix;
         for (var i = 0; i < matrix.GetUpperBound(0) + 1; i++)
         {
             for (var j = 0; j < matrix.Length / (matrix.GetUpperBound(0) + 1); j++)
@@ -15,6 +17,7 @@ public static class UtilsLibrary
 
         return result;
     }
+
     public static double[,] Sum(double[,] matrix1, double[,] matrix2)
     {
         var result = new double[4, 4];
@@ -55,7 +58,7 @@ public static class UtilsLibrary
         return result;
     }
 
-    public static double W(double t, int n) => n == 1 ? 1 - t : t;
+    private static double W(double t, int n) => n == 1 ? 1 - t : t;
 
     public static double Fi(double psi, double nu, int n) => n switch
     {
@@ -66,12 +69,29 @@ public static class UtilsLibrary
         _ => throw new NotImplementedException(),
     };
 
-    public static double DevFi(double t, int n) => n switch
+    public static double DevFi(double t, int n, int EorNu)
     {
-        0 => t - 1,
-        1 => 1 - t,
-        2 => -t,
-        3 => t,
-        _ => throw new NotImplementedException(),
-    };
+        if (EorNu == 0)
+        {
+            return n switch
+            {
+                0 => t - 1,
+                1 => 1 - t,
+                2 => -t,
+                3 => t,
+                _ => throw new NotImplementedException(),
+            };
+        }
+        else
+        {
+            return n switch
+            {
+                0 => t - 1,
+                1 => -t,
+                2 => 1 - t,
+                3 => t,
+                _ => throw new NotImplementedException(),
+            };
+        }
+    }
 }
