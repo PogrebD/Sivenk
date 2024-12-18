@@ -43,13 +43,12 @@ def draw_polygon(ax, coords, color):
     poly.set_facecolor(color)
     ax.add_patch(poly)
 
-def plot_points_and_connections(points, connections):
-    ax = fig.add_subplot(111)
+def plot_points_and_connections(ax, points, connections):
     ax.set_aspect('equal', 'datalim')
 
     x_coords = [x for x, y in points.values()]
     y_coords = [y for x, y in points.values()]
-    plt.scatter(x_coords, y_coords, color='black')
+    ax.scatter(x_coords, y_coords, color='black')
 
     lines = []
     for materialId, point1, point2, point3, point4 in connections:
@@ -65,6 +64,11 @@ def plot_points_and_connections(points, connections):
 
     line_collection = LineCollection(lines, colors='black', linewidths=0.8)
     ax.add_collection(line_collection)
+
+def plot_isolines(ax, X, Y, Z):
+    ax.set_aspect('equal', 'datalim')
+    ax.contour(X, Y, Z, colors='black', linewidths=0.8, levels=10)
+
 
 file_path = R'C:\Users\dotad\RiderProjects\Sivenk\Sivenk\output\Result.txt'
 points_path = R'C:\Users\dotad\RiderProjects\Sivenk\Sivenk\output\points.txt'
@@ -86,11 +90,12 @@ grid_x, grid_y = np.mgrid[
 
 grid_z = griddata((x_coords, y_coords), values, (grid_x, grid_y), method="cubic")
 
-fig = plt.figure(figsize=(8, 6))
+fig, ax = plt.subplots(figsize=(8, 6))
 
-plot_points_and_connections(points, connections)
+plot_isolines(ax, grid_x, grid_y, grid_z)
+plot_points_and_connections(ax, points, connections)
 
-plt.imshow(
+im = ax.imshow(
     grid_z.T,
     extent=(
         min(x_coords),
@@ -104,7 +109,7 @@ plt.imshow(
     vmax=max(values)
 )
 
-plt.colorbar(label="Function value")
+fig.colorbar(im, ax=ax, label="Function value")
 plt.title("Field")
 plt.xlabel("X")
 plt.ylabel("Y")
