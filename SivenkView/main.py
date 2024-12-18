@@ -70,9 +70,9 @@ def plot_isolines(ax, X, Y, Z):
     ax.contour(X, Y, Z, colors='black', linewidths=0.8, levels=10)
 
 
-file_path = R'C:\Users\dotad\RiderProjects\Sivenk\Sivenk\output\Result.txt'
-points_path = R'C:\Users\dotad\RiderProjects\Sivenk\Sivenk\output\points.txt'
-elements_path = R'C:\Users\dotad\RiderProjects\Sivenk\Sivenk\output\elements.txt'
+file_path = R'..\Sivenk\output\Result.txt'
+points_path = R'..\Sivenk\output\points.txt'
+elements_path = R'..\Sivenk\output\elements.txt'
 
 first_value, point_data = read_file(points_path)
 first_value, connection_data = read_file(elements_path)
