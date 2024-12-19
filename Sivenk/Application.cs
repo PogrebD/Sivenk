@@ -56,10 +56,11 @@ public class Application
         IGridWriter outputer = new Writer(outputPaths);
         outputer.Print(grid);
         DirectTask(grid, provider); 
-        /*if (config.openPythonProject)
+        if (config.openPythonProject)
         {
-            ShowGrid("../../../../GridView/GridView.py", "../../../output/points.txt", "../../../output/elements.txt");
-        }*/
+            ShowPythonProject("../../../../SivenkMaterial/main.py", "../../../output/points.txt", "../../../output/elements.txt");
+            ShowPythonProject("../../../../SivenkGradient/main.py", "../../../output/points.txt", "../../../output/elements.txt");
+        }
     }
 
     void DirectTask(Grid grid, BoundaryConditionsProvider providerBC)
@@ -122,7 +123,7 @@ public class Application
         }
     }
     
-    void ShowGrid(String filePath, string? pointsPath = null, string? elementsPath = null)
+    void ShowPythonProject(String filePath, string? pointsPath = null, string? elementsPath = null)
     {
         ProcessStartInfo prog = new()
         {

@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+﻿import matplotlib.pyplot as plt
 import sys
 import random
 
@@ -78,11 +78,11 @@ def create_color_map(connections):
 def plot_points_and_connections(points, connections):
     color_map = create_color_map(connections)
 
-    plt.figure(figsize=(8, 6))
+    #plt.figure(figsize=(8, 6))
 
-    x_coords = [x for x, y in points.values()]
-    y_coords = [y for x, y in points.values()]
-    plt.scatter(x_coords, y_coords, color='green')
+    #x_coords = [x for x, y in points.values()]
+    #y_coords = [y for x, y in points.values()]
+    #plt.scatter(x_coords, y_coords, color='green')
 
 
     # Создание графика
@@ -127,8 +127,8 @@ def plot_points_and_connections(points, connections):
     plt.show()
 
 
-points_path = sys.argv[1] if len(sys.argv) > 1 else R'C:\Users\dotad\RiderProjects\Sivenk\Sivenk\output\points.txt'
-elements_path = sys.argv[2] if len(sys.argv) > 1 else R'C:\Users\dotad\RiderProjects\Sivenk\Sivenk\output\elements.txt'
+points_path = sys.argv[1] if len(sys.argv) > 1 else R'..\Sivenk\output\points.txt'
+elements_path = sys.argv[2] if len(sys.argv) > 1 else R'..\Sivenk\output\elements.txt'
 
 first_value, point_data = read_file(points_path)
 first_value, connection_data = read_file(elements_path)

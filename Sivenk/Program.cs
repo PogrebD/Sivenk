@@ -22,4 +22,4 @@ app.Run(configuration, out grid);
 grid.GetEdgeId(22, 23);
 grid.GetPointsId(20);
 grid.GetEdgeIds(3);
-grid.GetElementIds(26);//////////!!!!!!!!!!!!!!!
+grid.GetElementIds(26);
