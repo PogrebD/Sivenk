@@ -6,20 +6,25 @@ Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
 Configuration configuration = new()
 {
-    openPythonProject = true,
+    openPythonProject = false,
     shouldSplitGrid = true,
     inputFolderName = "txt",
     outputFolderName = "output",
 };
 
 Application app = new();
-Grid grid;
 
-app.Run(configuration, out grid);
+app.Run(configuration, out var grid);
 
-//LocalMatrix localMatrix = new LocalMatrix((double x, double y) => x + y);
+int[] inputPoints = [22, 23];
+int inputEdgeId = 20;
+int inputElementId = 3;
 
-grid.GetEdgeId(22, 23);
-grid.GetPointsId(20);
-grid.GetEdgeIds(3);
-grid.GetElementIds(26);
+var pointsId = grid.GetPointsId(inputEdgeId);
+var edgeId = grid.GetEdgeId(inputPoints[0], inputPoints[1]);
+var edgesIds = grid.GetEdgeIds(inputElementId);
+var elementIds = grid.GetElementIds(26);
+
+Console.WriteLine($"Input Edge: {inputEdgeId} => Points: {pointsId[0]}, {pointsId[1]}");
+Console.WriteLine($"Input points: {inputPoints[0]}, {inputPoints[1]} => EdgeId: {edgeId}");
+Console.WriteLine($"Input {nameof(inputElementId)}: {inputElementId} => EdgeId: {edgesIds[0]}, {edgesIds[1]}, {edgesIds[2]}, {edgesIds[3]}");

@@ -19,11 +19,7 @@ public class Grid
 
     public int[] GetEdgeIds(int elementId)
     {
-        var edges = Elements[elementId].Edges;
-
-        Console.WriteLine($"Input {nameof(elementId)}: {elementId} => EdgeId: {edges[0]}, {edges[1]}, {edges[2]}, {edges[3]}");
-
-        return edges;
+        return Elements[elementId].Edges;
     }
 
     public IList<int> GetElementIds(int edgeId)
@@ -81,7 +77,6 @@ public class Grid
         if (lineLevel != -1)
         {
             int edgeId = firstPointId + (firstPointId / Bounds.PointsNumX + lineLevel) * Bounds.ElementsNumX;
-            Console.WriteLine($"Input points: {firstPointId}, {secondPointId} => EdgeId: {edgeId}");
             return edgeId;
         }
 
@@ -109,7 +104,6 @@ public class Grid
             points[1] = points[0] + Bounds.PointsNumX;
         }
 
-        Console.WriteLine($"Input Edge: {edgeId} => Points: {points[0]}, {points[1]}");
         return points;
     }
 
