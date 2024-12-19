@@ -79,7 +79,7 @@ public class Application
 
     static void PrintFileResultPointST(double[] result, Grid grid, Point[] points)
     {
-        File.WriteAllText(PathsProvider.outFolder,"\n");
+        File.WriteAllText(PathsProvider.outFolder,"");
         var resulter = new ResultInPoint(grid, result);
         Func fun = new Func();
         for (var i = 0; i < points.Length; i++)
@@ -94,7 +94,7 @@ public class Application
     
     static void PrintFileResult(double[] result, Grid grid)
     {
-        File.WriteAllText(PathsProvider.outAllFolder,"\n");
+        File.WriteAllText(PathsProvider.outAllFolder,"");
         /*for (int i = grid.Bounds.PointsNumY- 1; i >=0 ; i--)
         {
             for (int j = 0; j < grid.Bounds.PointsNumX; j++)
@@ -113,7 +113,7 @@ public class Application
     
     static void PrintFileTrueResult(Grid grid)
     {
-        File.WriteAllText(PathsProvider.trueFolder,"\n");
+        File.WriteAllText(PathsProvider.trueFolder,"");
         Func fun = new Func();
         for (int i = 0; i < grid.Points.Length; i++)
         {

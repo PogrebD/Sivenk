@@ -21,7 +21,7 @@ public class Grid
     {
         var edges = Elements[elementId].Edges;
 
-        Console.WriteLine($"Input {nameof(elementId)}: {elementId + 1} => {edges[0] + 1}, {edges[1] + 1}, {edges[2] + 1}, {edges[3] + 1}");
+        Console.WriteLine($"Input {nameof(elementId)}: {elementId} => EdgeId: {edges[0]}, {edges[1]}, {edges[2]}, {edges[3]}");
 
         return edges;
     }
@@ -81,7 +81,7 @@ public class Grid
         if (lineLevel != -1)
         {
             int edgeId = firstPointId + (firstPointId / Bounds.PointsNumX + lineLevel) * Bounds.ElementsNumX;
-            Console.WriteLine($"Input points: {firstPointId}, {secondPointId} => EdgeId: {edgeId + 1}");
+            Console.WriteLine($"Input points: {firstPointId}, {secondPointId} => EdgeId: {edgeId}");
             return edgeId;
         }
 
@@ -109,7 +109,7 @@ public class Grid
             points[1] = points[0] + Bounds.PointsNumX;
         }
 
-        Console.WriteLine($"Input Edge: {edgeId + 1} => Points: {points[0]}, {points[1]}");
+        Console.WriteLine($"Input Edge: {edgeId} => Points: {points[0]}, {points[1]}");
         return points;
     }
 

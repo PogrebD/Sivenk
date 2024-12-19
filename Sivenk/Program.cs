@@ -19,6 +19,7 @@ app.Run(configuration, out grid);
 
 //LocalMatrix localMatrix = new LocalMatrix((double x, double y) => x + y);
 
-//grid.GetEdgeId(22, 23);
-//grid.GetPointsId(20);
-//grid.GetEdgeIds(3);
+grid.GetEdgeId(22, 23);
+grid.GetPointsId(20);
+grid.GetEdgeIds(3);
+grid.GetElementIds(26);//////////!!!!!!!!!!!!!!!
