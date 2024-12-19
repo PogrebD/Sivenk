@@ -1,5 +1,6 @@
 ﻿import matplotlib.pyplot as plt
 import numpy as np
+import sys 
 from scipy.interpolate import griddata
 from matplotlib.patches import Polygon
 from matplotlib.collections import LineCollection
@@ -70,9 +71,9 @@ def plot_isolines(ax, X, Y, Z):
     ax.contour(X, Y, Z, colors='black', linewidths=0.8, levels=10, linestyles='dotted')
 
 
-file_path = R'..\Sivenk\output\Result.txt'
-points_path = R'..\Sivenk\output\points.txt'
-elements_path = R'..\Sivenk\output\elements.txt'
+file_path = R'../../../output/Result.txt' if len(sys.argv) > 1 else R'..\Sivenk\output\Result.txt'
+points_path = sys.argv[1] if len(sys.argv) > 1 else R'..\Sivenk\output\points.txt'
+elements_path = sys.argv[2] if len(sys.argv) > 1 else R'..\Sivenk\output\elements.txt'
 
 first_value, point_data = read_file(points_path)
 first_value, connection_data = read_file(elements_path)

@@ -78,11 +78,11 @@ def create_color_map(connections):
 def plot_points_and_connections(points, connections):
     color_map = create_color_map(connections)
 
-    plt.figure(figsize=(8, 6))
+    #plt.figure(figsize=(8, 6))
 
-    x_coords = [x for x, y in points.values()]
-    y_coords = [y for x, y in points.values()]
-    plt.scatter(x_coords, y_coords, color='green')
+    #x_coords = [x for x, y in points.values()]
+    #y_coords = [y for x, y in points.values()]
+    #plt.scatter(x_coords, y_coords, color='green')
 
 
     # Создание графика
